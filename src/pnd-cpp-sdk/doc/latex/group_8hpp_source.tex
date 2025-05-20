@@ -1,0 +1,66 @@
+\doxysection{group.\+hpp}
+\hypertarget{group_8hpp_source}{}\label{group_8hpp_source}\index{/Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/group.hpp@{/Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/group.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}aios.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }Pnd\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }GroupFeedback;}
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }GroupCommand;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{using\ }GroupFeedbackHandler\ =\ std::function<void(\textcolor{keyword}{const}\ GroupFeedback\ \&)>;}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_pnd_1_1_group}{Group}}\ final\ \{}
+\DoxyCodeLine{00022\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \mbox{\hyperlink{class_pnd_1_1_group}{Group}}(PndGroupPtr\ group,\ \textcolor{keywordtype}{float}\ initial\_feedback\_frequency\ =\ 0.0f,\ int32\_t\ initial\_command\_lifetime\ =\ 0);}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00033\ \ \ \mbox{\hyperlink{class_pnd_1_1_group_ac281e034c2a3c81913f430021162c48c}{\string~Group}}()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00038\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_pnd_1_1_group_af0fe8a108c0394bc5a6bce743ea4d2e4}{size}}();}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00043\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_pnd_1_1_group_a58efa5cc51879eb2b0e48d598853e1f1}{setCommandLifetimeMs}}(int32\_t\ ms);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00056\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_pnd_1_1_group_aef36e2e237611bf005cb089ab68d2e6f}{sendCommand}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_pnd_1_1_group_command}{GroupCommand}}\ \&group\_command);}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00069\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_pnd_1_1_group_a61b1a9249fa476a015c2df1c76b2bec4}{sendFeedbackRequest}}(PndFeedbackCode\ feedbackCode\ =\ PndFeedbackAll);}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00086\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_pnd_1_1_group_a7386668e596458dbc83aebb6d9872f1b}{getNextFeedback}}(\mbox{\hyperlink{class_pnd_1_1_group_feedback}{GroupFeedback}}\ \&feedback,\ int32\_t\ timeout\_ms\ =\ DEFAULT\_TIMEOUT\_MS);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00097\ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_pnd_1_1_group_ad2ec1e2a380050d57f3f7ed7afe1c292}{setFeedbackFrequencyHz}}(\textcolor{keywordtype}{float}\ frequency);}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00102\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_pnd_1_1_group_a87131e04be9e225deda80fab55873249}{getFeedbackFrequencyHz}}();}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00107\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_a935818455dae835ea39e0214006624b0}{addFeedbackHandler}}(GroupFeedbackHandler\ handler);}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00112\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_a6398a8747c558cc63be9b87715628c56}{clearFeedbackHandlers}}();}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00117\ \ \ PndFeedbackErrorPtr\ \mbox{\hyperlink{class_pnd_1_1_group_ab801ddf2900eeca4ca3d65d8e31cb70a}{getError}}(\textcolor{keywordtype}{int}\ idx);}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00123\ \ \ PndGroupPtr\ internal\_;}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00128\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ number\_of\_modules\_;}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00133\ \ \ std::mutex\ handler\_lock\_;}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00138\ \ \ std::vector<GroupFeedbackHandler>\ handlers\_;}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00143\ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_a3dc0ad393a69de6342fd02c15c127566}{callbackWrapper}}(PndGroupFeedbackPtr\ group\_feedback,\ \textcolor{keywordtype}{void}\ *user\_data);}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00148\ \ \ \textcolor{keywordtype}{void}\ callAttachedHandlers(PndGroupFeedbackPtr\ group\_feedback);}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00151\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ int32\_t\ DEFAULT\_TIMEOUT\_MS\ =\ 500;}
+\DoxyCodeLine{00152\ \};}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \}\ \ \textcolor{comment}{//\ namespace\ Pnd}}
+
+\end{DoxyCode}

@@ -1,0 +1,306 @@
+\doxysection{Pnd\+::Group\+Command Class Reference}
+\hypertarget{class_pnd_1_1_group_command}{}\label{class_pnd_1_1_group_command}\index{Pnd::GroupCommand@{Pnd::GroupCommand}}
+
+
+A list of Command objects appropriate for sending to a \doxylink{class_pnd_1_1_group}{Group} of modules; the \doxylink{class_pnd_1_1_group_command_a996c06f49a14fe2e37ba3d130d42e583}{size()} must match the number of modules in the group.  
+
+
+
+
+{\ttfamily \#include $<$group\+Command.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pnd_1_1_group_command_a5612e3cba8e9aa1c6a090ff0b5b3ecfe}\label{class_pnd_1_1_group_command_a5612e3cba8e9aa1c6a090ff0b5b3ecfe} 
+{\bfseries Group\+Command} (size\+\_\+t number\+\_\+of\+\_\+modules)
+\begin{DoxyCompactList}\small\item\em Create a group command with the specified number of modules. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_group_command_ab72b045e1e87105b393bc258889e9695}\label{class_pnd_1_1_group_command_ab72b045e1e87105b393bc258889e9695} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Group\+Command} () noexcept
+\begin{DoxyCompactList}\small\item\em Destructor cleans up group command object as necessary. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_group_command_a996c06f49a14fe2e37ba3d130d42e583}\label{class_pnd_1_1_group_command_a996c06f49a14fe2e37ba3d130d42e583} 
+size\+\_\+t {\bfseries size} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of module commands in this group command. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_group_command_a13289e755efb7945ffca45adf83decf8}\label{class_pnd_1_1_group_command_a13289e755efb7945ffca45adf83decf8} 
+Pnd\+Command\+Ptr {\bfseries operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t index)
+\begin{DoxyCompactList}\small\item\em Access the command for an individual module. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_group_command_a9205b63ba73f4053962532965558b465}\label{class_pnd_1_1_group_command_a9205b63ba73f4053962532965558b465} 
+const Pnd\+Command\+Ptr {\bfseries operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t index) const
+\begin{DoxyCompactList}\small\item\em Access the command for an individual module. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_group_command_ad26bbcadd3c8fcae61dec60cb3624785}\label{class_pnd_1_1_group_command_ad26bbcadd3c8fcae61dec60cb3624785} 
+void {\bfseries clear} ()
+\begin{DoxyCompactList}\small\item\em Clears all data in this \doxylink{class_pnd_1_1_group_command}{Group\+Command} object; this returns to the state the \doxylink{class_pnd_1_1_group_command}{Group\+Command} was at time of creation. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_a79828aa23e6c7d2849362c190eb4503a}{set\+Position}} (const std\+::vector$<$ float $>$ \&position)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting position commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_a3dfe1e299f99b48b3a5a4290e1de9f47}{set\+Trapezoidal\+Move}} (const std\+::vector$<$ float $>$ \&val)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting Trapezoidal\+Move commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_a0cefa3c090435d4bffb4b23481678c99}{set\+Velocity}} (const std\+::vector$<$ float $>$ \&velocity)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting velocity commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_a6ce9c03b855ca73cb7cb2457790e412f}{set\+Velocity\+Ramp}} (const std\+::vector$<$ float $>$ \&velocity)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting velocity ramp commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_a7643ea32d2e41d485cd22e8289922629}{set\+Current}} (const std\+::vector$<$ float $>$ \&effort)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting current commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_a354e5fb27cb3c7f9cbcffcc62cda58e0}{enable}} (const std\+::vector$<$ float $>$ \&status)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting enable commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_ae1cfd7081ec798c4ece265ec8493cdba}{reboot}} (const std\+::vector$<$ bool $>$ \&flag)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting reboot commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_ae1b9b877dfb62382f4ae8bcef3e9ea09}{get\+Error}} (const std\+::vector$<$ bool $>$ \&flag)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting get\+Error commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_afe77c3c10c0b40295abd1e763702190d}{clear\+Error}} (const std\+::vector$<$ bool $>$ \&flag)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting clear\+Error commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_a5c9f4a8296657aba173d1f98e1d4d5d8}{reset\+Linear\+Count}} (const std\+::vector$<$ float $>$ \&linear\+Count)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting reset\+Linear\+Count commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_a6a28007ad6b56e3ec253056a778f375a}{set\+Motion\+Ctrl\+Config}} (const std\+::vector$<$ Motion\+Controller\+Config \texorpdfstring{$\ast$}{*} $>$ \&config)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting set\+Motion\+Ctrl\+Config commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_a216225350b531ca83a4e0ee0fa586848}{set\+Motor\+Config}} (const std\+::vector$<$ Motor\+Config \texorpdfstring{$\ast$}{*} $>$ \&config)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting set\+Motor\+Config commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_a646990669375b21eb92a31ad9e086868}{set\+Trap\+Traj}} (const std\+::vector$<$ Trap\+Traj \texorpdfstring{$\ast$}{*} $>$ \&config)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting set\+Trap\+Traj commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_a6aed015149375f438c4e04c9b281c168}{save\+Config}} (const std\+::vector$<$ bool $>$ \&flag)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting save\+Config commands from vectors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_ae91a4090f92e2a31f57c3c7c9f1a3bb3}{set\+Network\+Setting}} (const std\+::vector$<$ Network\+Setting \texorpdfstring{$\ast$}{*} $>$ \&config)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting set\+Network\+Setting commands from vectors. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_group_command_a8235d142016d6b0840ae1278fffe4672}\label{class_pnd_1_1_group_command_a8235d142016d6b0840ae1278fffe4672} 
+void {\bfseries get\+Motor\+Rotor\+Abs\+Pos} (const std\+::vector$<$ bool $>$ \&flag)
+\begin{DoxyCompactList}\small\item\em Get Motor rotor absolute position. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_group_command_a0bb5d4941164c05124f99b903c6039e3}\label{class_pnd_1_1_group_command_a0bb5d4941164c05124f99b903c6039e3} 
+void {\bfseries set\+Latency\+Test} (const std\+::vector$<$ bool $>$ \&flag)
+\item 
+\Hypertarget{class_pnd_1_1_group_command_a3a92f4d39896b59324cb459f1c1c8b52}\label{class_pnd_1_1_group_command_a3a92f4d39896b59324cb459f1c1c8b52} 
+void {\bfseries set\+Input\+Position\+Pt} (const std\+::vector$<$ Pos\+Pt\+Info $>$ \&param)
+\item 
+\Hypertarget{class_pnd_1_1_group_command_a1dbea874a6070457a48c3ffb60bc2e8f}\label{class_pnd_1_1_group_command_a1dbea874a6070457a48c3ffb60bc2e8f} 
+void {\bfseries set\+Input\+Velocity\+Pt} (const std\+::vector$<$ float $>$ \&param)
+\item 
+\Hypertarget{class_pnd_1_1_group_command_a0092d984bb1d14b8f61c86e60de72ef1}\label{class_pnd_1_1_group_command_a0092d984bb1d14b8f61c86e60de72ef1} 
+void {\bfseries set\+Input\+Torque\+Pt} (const std\+::vector$<$ float $>$ \&param)
+\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_command_a29ae7dbb82e5bb53e4cb81e3b3cfc7cf}{Rcu\+Power}} (const std\+::vector$<$ bool $>$ \&status)
+\begin{DoxyCompactList}\small\item\em Convenience function for setting ctrl\+Box\+Enable commands from vectors. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_group_command_a49e2a52edb41333eaeccb6d2e1d5d606}\label{class_pnd_1_1_group_command_a49e2a52edb41333eaeccb6d2e1d5d606} 
+void {\bfseries Rcu\+AV5\+VPower} (const std\+::vector$<$ bool $>$ \&status)
+\item 
+\Hypertarget{class_pnd_1_1_group_command_ad15f8e30cf2572ad7e1c762a114c8ee4}\label{class_pnd_1_1_group_command_ad15f8e30cf2572ad7e1c762a114c8ee4} 
+void {\bfseries Rcu\+V5\+VPower} (const std\+::vector$<$ bool $>$ \&status)
+\item 
+\Hypertarget{class_pnd_1_1_group_command_aea3e2d15344b6f55f36d36c578090c51}\label{class_pnd_1_1_group_command_aea3e2d15344b6f55f36d36c578090c51} 
+void {\bfseries Rcu\+V5\+VAPower} (const std\+::vector$<$ bool $>$ \&status)
+\item 
+\Hypertarget{class_pnd_1_1_group_command_a659e6a0ea8ff03fa45c69346af822827}\label{class_pnd_1_1_group_command_a659e6a0ea8ff03fa45c69346af822827} 
+void {\bfseries Rcu\+V5\+VBPower} (const std\+::vector$<$ bool $>$ \&status)
+\item 
+\Hypertarget{class_pnd_1_1_group_command_ab2d2d8d2ee22fb52e9c7b1601dfe9302}\label{class_pnd_1_1_group_command_ab2d2d8d2ee22fb52e9c7b1601dfe9302} 
+void {\bfseries Rcu12\+VPower} (const std\+::vector$<$ bool $>$ \&status)
+\item 
+\Hypertarget{class_pnd_1_1_group_command_a76a16f3f8b0c5050f630f4a6e0876eb9}\label{class_pnd_1_1_group_command_a76a16f3f8b0c5050f630f4a6e0876eb9} 
+void {\bfseries Rcu\+Fan12\+VPower} (const std\+::vector$<$ bool $>$ \&status)
+\item 
+\Hypertarget{class_pnd_1_1_group_command_a86f95dfdda0dcd4b78b79df9e04dacf6}\label{class_pnd_1_1_group_command_a86f95dfdda0dcd4b78b79df9e04dacf6} 
+void {\bfseries Rcu19\+VPower} (const std\+::vector$<$ bool $>$ \&status)
+\item 
+\Hypertarget{class_pnd_1_1_group_command_ad87fd46d2cb4df46c21e4c006ea6d0f0}\label{class_pnd_1_1_group_command_ad87fd46d2cb4df46c21e4c006ea6d0f0} 
+void {\bfseries Rcu\+Brake\+Cmd} (const std\+::vector$<$ Rcu\+Brake $>$ \&param)
+\item 
+\Hypertarget{class_pnd_1_1_group_command_a13b6dc5678faf359022796a739cb6fcd}\label{class_pnd_1_1_group_command_a13b6dc5678faf359022796a739cb6fcd} 
+void {\bfseries Rcu\+Adc\+Offset} (const std\+::vector$<$ float $>$ \&param)
+\item 
+\Hypertarget{class_pnd_1_1_group_command_a1eb80e698507a354a8d3c71c87ec4986}\label{class_pnd_1_1_group_command_a1eb80e698507a354a8d3c71c87ec4986} 
+void {\bfseries Rcu\+Fw\+Upgrade} ()
+\item 
+\Hypertarget{class_pnd_1_1_group_command_ac402f22c27d5874086639eefb6777ca9}\label{class_pnd_1_1_group_command_ac402f22c27d5874086639eefb6777ca9} 
+void {\bfseries get\+Encoder\+Angle} (const std\+::vector$<$ float $>$ \&param)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Pnd\+Group\+Command\+Ptr \mbox{\hyperlink{class_pnd_1_1_group_command_a74e0e3725aebda4005fd42c8e1485ae7}{internal\+\_\+}}
+\item 
+const size\+\_\+t \mbox{\hyperlink{class_pnd_1_1_group_command_aa2ff642adc863837058345b463420ef6}{number\+\_\+of\+\_\+modules\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A list of Command objects appropriate for sending to a \doxylink{class_pnd_1_1_group}{Group} of modules; the \doxylink{class_pnd_1_1_group_command_a996c06f49a14fe2e37ba3d130d42e583}{size()} must match the number of modules in the group. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_pnd_1_1_group_command_afe77c3c10c0b40295abd1e763702190d}\label{class_pnd_1_1_group_command_afe77c3c10c0b40295abd1e763702190d} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!clearError@{clearError}}
+\index{clearError@{clearError}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{clearError()}{clearError()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::clear\+Error (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ bool $>$ \&}]{flag }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting clear\+Error commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_a354e5fb27cb3c7f9cbcffcc62cda58e0}\label{class_pnd_1_1_group_command_a354e5fb27cb3c7f9cbcffcc62cda58e0} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!enable@{enable}}
+\index{enable@{enable}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{enable()}{enable()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::enable (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ float $>$ \&}]{status }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting enable commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. enable is (nan continue， 0 disable， 1 enable),so choose float type. \Hypertarget{class_pnd_1_1_group_command_ae1b9b877dfb62382f4ae8bcef3e9ea09}\label{class_pnd_1_1_group_command_ae1b9b877dfb62382f4ae8bcef3e9ea09} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!getError@{getError}}
+\index{getError@{getError}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{getError()}{getError()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::get\+Error (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ bool $>$ \&}]{flag }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting get\+Error commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_a29ae7dbb82e5bb53e4cb81e3b3cfc7cf}\label{class_pnd_1_1_group_command_a29ae7dbb82e5bb53e4cb81e3b3cfc7cf} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!RcuPower@{RcuPower}}
+\index{RcuPower@{RcuPower}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{RcuPower()}{RcuPower()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::\+Rcu\+Power (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ bool $>$ \&}]{status }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting ctrl\+Box\+Enable commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_ae1cfd7081ec798c4ece265ec8493cdba}\label{class_pnd_1_1_group_command_ae1cfd7081ec798c4ece265ec8493cdba} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!reboot@{reboot}}
+\index{reboot@{reboot}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{reboot()}{reboot()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::reboot (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ bool $>$ \&}]{flag }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting reboot commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_a5c9f4a8296657aba173d1f98e1d4d5d8}\label{class_pnd_1_1_group_command_a5c9f4a8296657aba173d1f98e1d4d5d8} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!resetLinearCount@{resetLinearCount}}
+\index{resetLinearCount@{resetLinearCount}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{resetLinearCount()}{resetLinearCount()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::reset\+Linear\+Count (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ float $>$ \&}]{linear\+Count }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting reset\+Linear\+Count commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_a6aed015149375f438c4e04c9b281c168}\label{class_pnd_1_1_group_command_a6aed015149375f438c4e04c9b281c168} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!saveConfig@{saveConfig}}
+\index{saveConfig@{saveConfig}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{saveConfig()}{saveConfig()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::save\+Config (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ bool $>$ \&}]{flag }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting save\+Config commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_a7643ea32d2e41d485cd22e8289922629}\label{class_pnd_1_1_group_command_a7643ea32d2e41d485cd22e8289922629} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!setCurrent@{setCurrent}}
+\index{setCurrent@{setCurrent}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{setCurrent()}{setCurrent()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::set\+Current (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ float $>$ \&}]{effort }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting current commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_a6a28007ad6b56e3ec253056a778f375a}\label{class_pnd_1_1_group_command_a6a28007ad6b56e3ec253056a778f375a} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!setMotionCtrlConfig@{setMotionCtrlConfig}}
+\index{setMotionCtrlConfig@{setMotionCtrlConfig}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{setMotionCtrlConfig()}{setMotionCtrlConfig()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::set\+Motion\+Ctrl\+Config (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ Motion\+Controller\+Config \texorpdfstring{$\ast$}{*} $>$ \&}]{config }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting set\+Motion\+Ctrl\+Config commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_a216225350b531ca83a4e0ee0fa586848}\label{class_pnd_1_1_group_command_a216225350b531ca83a4e0ee0fa586848} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!setMotorConfig@{setMotorConfig}}
+\index{setMotorConfig@{setMotorConfig}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{setMotorConfig()}{setMotorConfig()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::set\+Motor\+Config (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ Motor\+Config \texorpdfstring{$\ast$}{*} $>$ \&}]{config }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting set\+Motor\+Config commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_ae91a4090f92e2a31f57c3c7c9f1a3bb3}\label{class_pnd_1_1_group_command_ae91a4090f92e2a31f57c3c7c9f1a3bb3} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!setNetworkSetting@{setNetworkSetting}}
+\index{setNetworkSetting@{setNetworkSetting}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{setNetworkSetting()}{setNetworkSetting()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::set\+Network\+Setting (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ Network\+Setting \texorpdfstring{$\ast$}{*} $>$ \&}]{config }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting set\+Network\+Setting commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_a79828aa23e6c7d2849362c190eb4503a}\label{class_pnd_1_1_group_command_a79828aa23e6c7d2849362c190eb4503a} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!setPosition@{setPosition}}
+\index{setPosition@{setPosition}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{setPosition()}{setPosition()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::set\+Position (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ float $>$ \&}]{position }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting position commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_a3dfe1e299f99b48b3a5a4290e1de9f47}\label{class_pnd_1_1_group_command_a3dfe1e299f99b48b3a5a4290e1de9f47} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!setTrapezoidalMove@{setTrapezoidalMove}}
+\index{setTrapezoidalMove@{setTrapezoidalMove}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{setTrapezoidalMove()}{setTrapezoidalMove()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::set\+Trapezoidal\+Move (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ float $>$ \&}]{val }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting Trapezoidal\+Move commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_a646990669375b21eb92a31ad9e086868}\label{class_pnd_1_1_group_command_a646990669375b21eb92a31ad9e086868} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!setTrapTraj@{setTrapTraj}}
+\index{setTrapTraj@{setTrapTraj}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{setTrapTraj()}{setTrapTraj()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::set\+Trap\+Traj (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ Trap\+Traj \texorpdfstring{$\ast$}{*} $>$ \&}]{config }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting set\+Trap\+Traj commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_a0cefa3c090435d4bffb4b23481678c99}\label{class_pnd_1_1_group_command_a0cefa3c090435d4bffb4b23481678c99} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!setVelocity@{setVelocity}}
+\index{setVelocity@{setVelocity}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{setVelocity()}{setVelocity()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::set\+Velocity (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ float $>$ \&}]{velocity }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting velocity commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. \Hypertarget{class_pnd_1_1_group_command_a6ce9c03b855ca73cb7cb2457790e412f}\label{class_pnd_1_1_group_command_a6ce9c03b855ca73cb7cb2457790e412f} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!setVelocityRamp@{setVelocityRamp}}
+\index{setVelocityRamp@{setVelocityRamp}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{setVelocityRamp()}{setVelocityRamp()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+Command\+::set\+Velocity\+Ramp (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ float $>$ \&}]{velocity }\end{DoxyParamCaption})}
+
+
+
+Convenience function for setting velocity ramp commands from vectors. 
+
+Note that if the vector is not the correct link, no action is taken. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_pnd_1_1_group_command_a74e0e3725aebda4005fd42c8e1485ae7}\label{class_pnd_1_1_group_command_a74e0e3725aebda4005fd42c8e1485ae7} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!internal\_@{internal\_}}
+\index{internal\_@{internal\_}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{internal\_}{internal\_}}
+{\footnotesize\ttfamily Pnd\+Group\+Command\+Ptr Pnd\+::\+Group\+Command\+::internal\+\_\+}
+
+C-\/style group command object. NOTE\+: this should not be used except by library functions! \Hypertarget{class_pnd_1_1_group_command_aa2ff642adc863837058345b463420ef6}\label{class_pnd_1_1_group_command_aa2ff642adc863837058345b463420ef6} 
+\index{Pnd::GroupCommand@{Pnd::GroupCommand}!number\_of\_modules\_@{number\_of\_modules\_}}
+\index{number\_of\_modules\_@{number\_of\_modules\_}!Pnd::GroupCommand@{Pnd::GroupCommand}}
+\doxysubsubsection{\texorpdfstring{number\_of\_modules\_}{number\_of\_modules\_}}
+{\footnotesize\ttfamily const size\+\_\+t Pnd\+::\+Group\+Command\+::number\+\_\+of\+\_\+modules\+\_\+}
+
+The number of modules in this group command. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/group\+Command.\+hpp\item 
+/\+Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/group\+Command.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,171 @@
+\doxysection{Pnd\+::Group Class Reference}
+\hypertarget{class_pnd_1_1_group}{}\label{class_pnd_1_1_group}\index{Pnd::Group@{Pnd::Group}}
+
+
+Represents a group of physical Pnd actuator, and allows Command, Feedback, and Info objects to be sent to and recieved from the actuator.  
+
+
+
+
+{\ttfamily \#include $<$group.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_pnd_1_1_group_aab8b55c4cc81512889ff18a43063e96a}{Group}} (Pnd\+Group\+Ptr group, float initial\+\_\+feedback\+\_\+frequency=0.\+0f, int32\+\_\+t initial\+\_\+command\+\_\+lifetime=0)
+\item 
+\Hypertarget{class_pnd_1_1_group_ac281e034c2a3c81913f430021162c48c}\label{class_pnd_1_1_group_ac281e034c2a3c81913f430021162c48c} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Group} () noexcept
+\begin{DoxyCompactList}\small\item\em Destructor cleans up group. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_group_af0fe8a108c0394bc5a6bce743ea4d2e4}\label{class_pnd_1_1_group_af0fe8a108c0394bc5a6bce743ea4d2e4} 
+int {\bfseries size} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of modules in the group. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_group_a58efa5cc51879eb2b0e48d598853e1f1}\label{class_pnd_1_1_group_a58efa5cc51879eb2b0e48d598853e1f1} 
+bool {\bfseries set\+Command\+Lifetime\+Ms} (int32\+\_\+t ms)
+\begin{DoxyCompactList}\small\item\em Sets the command lifetime for the modules in this group. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_pnd_1_1_group_aef36e2e237611bf005cb089ab68d2e6f}{send\+Command}} (const \mbox{\hyperlink{class_pnd_1_1_group_command}{Group\+Command}} \&group\+\_\+command)
+\begin{DoxyCompactList}\small\item\em Send a command to the given group, requesting an acknowledgement of transmission to be sent back. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_pnd_1_1_group_a61b1a9249fa476a015c2df1c76b2bec4}{send\+Feedback\+Request}} (Pnd\+Feedback\+Code feedback\+Code=Pnd\+Feedback\+All)
+\begin{DoxyCompactList}\small\item\em Requests feedback from the group. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_pnd_1_1_group_a7386668e596458dbc83aebb6d9872f1b}{get\+Next\+Feedback}} (\mbox{\hyperlink{class_pnd_1_1_group_feedback}{Group\+Feedback}} \&feedback, int32\+\_\+t timeout\+\_\+ms=DEFAULT\+\_\+\+TIMEOUT\+\_\+\+MS)
+\begin{DoxyCompactList}\small\item\em Returns the most recently stored feedback from a sent feedback request, or returns the next one received (up to the requested timeout). \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_pnd_1_1_group_ad2ec1e2a380050d57f3f7ed7afe1c292}{set\+Feedback\+Frequency\+Hz}} (float frequency)
+\begin{DoxyCompactList}\small\item\em Sets the frequency of the internal feedback request + callback thread. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_pnd_1_1_group_a87131e04be9e225deda80fab55873249}{get\+Feedback\+Frequency\+Hz}} ()
+\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_a935818455dae835ea39e0214006624b0}{add\+Feedback\+Handler}} (Group\+Feedback\+Handler handler)
+\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_a6398a8747c558cc63be9b87715628c56}{clear\+Feedback\+Handlers}} ()
+\item 
+\Hypertarget{class_pnd_1_1_group_ab801ddf2900eeca4ca3d65d8e31cb70a}\label{class_pnd_1_1_group_ab801ddf2900eeca4ca3d65d8e31cb70a} 
+Pnd\+Feedback\+Error\+Ptr {\bfseries get\+Error} (int idx)
+\begin{DoxyCompactList}\small\item\em Gets the actuator error message. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pnd_1_1_group_a146ebe83019b65c84e4f78d58892682b}\label{class_pnd_1_1_group_a146ebe83019b65c84e4f78d58892682b} 
+static const int32\+\_\+t {\bfseries DEFAULT\+\_\+\+TIMEOUT\+\_\+\+MS} = 500
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_pnd_1_1_group_a3dc0ad393a69de6342fd02c15c127566}{callback\+Wrapper}} (Pnd\+Group\+Feedback\+Ptr group\+\_\+feedback, void \texorpdfstring{$\ast$}{*}user\+\_\+data)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a group of physical Pnd actuator, and allows Command, Feedback, and Info objects to be sent to and recieved from the actuator. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_pnd_1_1_group_aab8b55c4cc81512889ff18a43063e96a}\label{class_pnd_1_1_group_aab8b55c4cc81512889ff18a43063e96a} 
+\index{Pnd::Group@{Pnd::Group}!Group@{Group}}
+\index{Group@{Group}!Pnd::Group@{Pnd::Group}}
+\doxysubsubsection{\texorpdfstring{Group()}{Group()}}
+{\footnotesize\ttfamily Pnd\+::\+Group\+::\+Group (\begin{DoxyParamCaption}\item[{Pnd\+Group\+Ptr}]{group,  }\item[{float}]{initial\+\_\+feedback\+\_\+frequency = {\ttfamily 0.0f},  }\item[{int32\+\_\+t}]{initial\+\_\+command\+\_\+lifetime = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+Creates a group from the underlying C-\/style group object. This should only be called to create groups from the lookup class, not from user code! 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_pnd_1_1_group_a935818455dae835ea39e0214006624b0}\label{class_pnd_1_1_group_a935818455dae835ea39e0214006624b0} 
+\index{Pnd::Group@{Pnd::Group}!addFeedbackHandler@{addFeedbackHandler}}
+\index{addFeedbackHandler@{addFeedbackHandler}!Pnd::Group@{Pnd::Group}}
+\doxysubsubsection{\texorpdfstring{addFeedbackHandler()}{addFeedbackHandler()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+::add\+Feedback\+Handler (\begin{DoxyParamCaption}\item[{Group\+Feedback\+Handler}]{handler }\end{DoxyParamCaption})}
+
+TODO\+: \Hypertarget{class_pnd_1_1_group_a6398a8747c558cc63be9b87715628c56}\label{class_pnd_1_1_group_a6398a8747c558cc63be9b87715628c56} 
+\index{Pnd::Group@{Pnd::Group}!clearFeedbackHandlers@{clearFeedbackHandlers}}
+\index{clearFeedbackHandlers@{clearFeedbackHandlers}!Pnd::Group@{Pnd::Group}}
+\doxysubsubsection{\texorpdfstring{clearFeedbackHandlers()}{clearFeedbackHandlers()}}
+{\footnotesize\ttfamily void Pnd\+::\+Group\+::clear\+Feedback\+Handlers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+TODO\+: \Hypertarget{class_pnd_1_1_group_a87131e04be9e225deda80fab55873249}\label{class_pnd_1_1_group_a87131e04be9e225deda80fab55873249} 
+\index{Pnd::Group@{Pnd::Group}!getFeedbackFrequencyHz@{getFeedbackFrequencyHz}}
+\index{getFeedbackFrequencyHz@{getFeedbackFrequencyHz}!Pnd::Group@{Pnd::Group}}
+\doxysubsubsection{\texorpdfstring{getFeedbackFrequencyHz()}{getFeedbackFrequencyHz()}}
+{\footnotesize\ttfamily float Pnd\+::\+Group\+::get\+Feedback\+Frequency\+Hz (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+TODO\+: \Hypertarget{class_pnd_1_1_group_a7386668e596458dbc83aebb6d9872f1b}\label{class_pnd_1_1_group_a7386668e596458dbc83aebb6d9872f1b} 
+\index{Pnd::Group@{Pnd::Group}!getNextFeedback@{getNextFeedback}}
+\index{getNextFeedback@{getNextFeedback}!Pnd::Group@{Pnd::Group}}
+\doxysubsubsection{\texorpdfstring{getNextFeedback()}{getNextFeedback()}}
+{\footnotesize\ttfamily bool Pnd\+::\+Group\+::get\+Next\+Feedback (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_pnd_1_1_group_feedback}{Group\+Feedback}} \&}]{feedback,  }\item[{int32\+\_\+t}]{timeout\+\_\+ms = {\ttfamily DEFAULT\+\_\+TIMEOUT\+\_\+MS} }\end{DoxyParamCaption})}
+
+
+
+Returns the most recently stored feedback from a sent feedback request, or returns the next one received (up to the requested timeout). 
+
+Note that a feedback request can be sent either with the send\+Feedback\+Request function.
+
+Warning\+: other data in the provided \textquotesingle{}Feedback\textquotesingle{} object is erased!
+
+
+\begin{DoxyParams}{Parameters}
+{\em feedback} & On success, the group feedback read from the group are written into this structure.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if feedback was returned, otherwise {\ttfamily false} on failure (i.\+e., connection error or timeout waiting for response). 
+\end{DoxyReturn}
+\Hypertarget{class_pnd_1_1_group_aef36e2e237611bf005cb089ab68d2e6f}\label{class_pnd_1_1_group_aef36e2e237611bf005cb089ab68d2e6f} 
+\index{Pnd::Group@{Pnd::Group}!sendCommand@{sendCommand}}
+\index{sendCommand@{sendCommand}!Pnd::Group@{Pnd::Group}}
+\doxysubsubsection{\texorpdfstring{sendCommand()}{sendCommand()}}
+{\footnotesize\ttfamily bool Pnd\+::\+Group\+::send\+Command (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_pnd_1_1_group_command}{Group\+Command}} \&}]{group\+\_\+command }\end{DoxyParamCaption})}
+
+
+
+Send a command to the given group, requesting an acknowledgement of transmission to be sent back. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em group\+\_\+command} & The \doxylink{class_pnd_1_1_group_command}{Group\+Command} object containing information to be sent to the group.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if an acknowledgement was successfully received (guaranteeing the group received this command), or a negative number for an error otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_pnd_1_1_group_a61b1a9249fa476a015c2df1c76b2bec4}\label{class_pnd_1_1_group_a61b1a9249fa476a015c2df1c76b2bec4} 
+\index{Pnd::Group@{Pnd::Group}!sendFeedbackRequest@{sendFeedbackRequest}}
+\index{sendFeedbackRequest@{sendFeedbackRequest}!Pnd::Group@{Pnd::Group}}
+\doxysubsubsection{\texorpdfstring{sendFeedbackRequest()}{sendFeedbackRequest()}}
+{\footnotesize\ttfamily bool Pnd\+::\+Group\+::send\+Feedback\+Request (\begin{DoxyParamCaption}\item[{Pnd\+Feedback\+Code}]{feedback\+Code = {\ttfamily PndFeedbackAll} }\end{DoxyParamCaption})}
+
+
+
+Requests feedback from the group. 
+
+Sends a background request to the modules in the group; if/when all modules return feedback, any associated handler functions are called. This returned feedback is also stored to be returned by the next call to get\+Next\+Feedback (any previously returned data is discarded).
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if feedback was request was successfully sent, otherwise {\ttfamily false} on failure (i.\+e., connection error). 
+\end{DoxyReturn}
+\Hypertarget{class_pnd_1_1_group_ad2ec1e2a380050d57f3f7ed7afe1c292}\label{class_pnd_1_1_group_ad2ec1e2a380050d57f3f7ed7afe1c292} 
+\index{Pnd::Group@{Pnd::Group}!setFeedbackFrequencyHz@{setFeedbackFrequencyHz}}
+\index{setFeedbackFrequencyHz@{setFeedbackFrequencyHz}!Pnd::Group@{Pnd::Group}}
+\doxysubsubsection{\texorpdfstring{setFeedbackFrequencyHz()}{setFeedbackFrequencyHz()}}
+{\footnotesize\ttfamily bool Pnd\+::\+Group\+::set\+Feedback\+Frequency\+Hz (\begin{DoxyParamCaption}\item[{float}]{frequency }\end{DoxyParamCaption})}
+
+
+
+Sets the frequency of the internal feedback request + callback thread. 
+
+TODO\+: 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the frequency successfully was set, or {\ttfamily false} if the parameter was outside the accepted range (less than zero or faster than supported maximum). 
+\end{DoxyReturn}
+
+
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{class_pnd_1_1_group_a3dc0ad393a69de6342fd02c15c127566}\label{class_pnd_1_1_group_a3dc0ad393a69de6342fd02c15c127566} 
+\index{Pnd::Group@{Pnd::Group}!callbackWrapper@{callbackWrapper}}
+\index{callbackWrapper@{callbackWrapper}!Pnd::Group@{Pnd::Group}}
+\doxysubsubsection{\texorpdfstring{callbackWrapper}{callbackWrapper}}
+{\footnotesize\ttfamily void callback\+Wrapper (\begin{DoxyParamCaption}\item[{Pnd\+Group\+Feedback\+Ptr}]{group\+\_\+feedback,  }\item[{void \texorpdfstring{$\ast$}{*}}]{user\+\_\+data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+TODO\+: 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/group.\+hpp\item 
+/\+Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/group.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,28 @@
+# model_pb: "python_scripts/source/rl_0205_3net_pndone_libtorch_0.pt"
+# obs_num: 91
+# state_name: "StateMLP"
+# joint_config_path: "robot_interface/config/joint_pd_config.json"
+
+####### mlp demo #######
+# model_pb: "python_scripts/source/example_obs91.pt"
+# obs_num: 91
+# joint_config_path: "robot_interface/config/joint_pd_config.json"
+# state_name: "StateMlpDemo"
+
+####### ros demo #######
+model_pb: "python_scripts/source/example_obs91.pt"
+obs_num: 91
+joint_config_path: "robot_interface/config/joint_pd_config.json"
+state_name: "StateRosDemo"
+
+####### pos demo #######
+#model_pb: "python_scripts/source/example_obs91.pt"
+#obs_num: 91
+#joint_config_path: "robot_interface/config/joint_pd_config.json"
+#state_name: "StatePosDemo"
+
+####### ankle demo #######
+# model_pb: "python_scripts/source/example_obs91.pt"
+# obs_num: 91
+# joint_config_path: "robot_interface/config/joint_pd_config.json"
+# state_name: "StateAnKleTestDemo"

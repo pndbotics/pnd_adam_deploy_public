@@ -1,0 +1,98 @@
+\doxysection{group\+Command.\+hpp}
+\hypertarget{group_command_8hpp_source}{}\label{group_command_8hpp_source}\index{/Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/groupCommand.hpp@{/Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/groupCommand.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}aios.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }Pnd\ \{}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_pnd_1_1_group_command}{GroupCommand}}\ final\ \{}
+\DoxyCodeLine{00015\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \mbox{\hyperlink{class_pnd_1_1_group_command}{GroupCommand}}(\textcolor{keywordtype}{size\_t}\ number\_of\_modules);}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00024\ \ \ \mbox{\hyperlink{class_pnd_1_1_group_command_ab72b045e1e87105b393bc258889e9695}{\string~GroupCommand}}()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a996c06f49a14fe2e37ba3d130d42e583}{size}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00034\ \ \ PndCommandPtr\ \mbox{\hyperlink{class_pnd_1_1_group_command_a13289e755efb7945ffca45adf83decf8}{operator[]}}(\textcolor{keywordtype}{size\_t}\ index);}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00039\ \ \ \textcolor{keyword}{const}\ PndCommandPtr\ \mbox{\hyperlink{class_pnd_1_1_group_command_a13289e755efb7945ffca45adf83decf8}{operator[]}}(\textcolor{keywordtype}{size\_t}\ index)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00045\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_ad26bbcadd3c8fcae61dec60cb3624785}{clear}}();}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00052\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a79828aa23e6c7d2849362c190eb4503a}{setPosition}}(\textcolor{keyword}{const}\ std::vector<float>\ \&position);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00060\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a3dfe1e299f99b48b3a5a4290e1de9f47}{setTrapezoidalMove}}(\textcolor{keyword}{const}\ std::vector<float>\ \&val);}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00067\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a0cefa3c090435d4bffb4b23481678c99}{setVelocity}}(\textcolor{keyword}{const}\ std::vector<float>\ \&velocity);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00075\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a6ce9c03b855ca73cb7cb2457790e412f}{setVelocityRamp}}(\textcolor{keyword}{const}\ std::vector<float>\ \&velocity);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00082\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a7643ea32d2e41d485cd22e8289922629}{setCurrent}}(\textcolor{keyword}{const}\ std::vector<float>\ \&effort);}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00090\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a354e5fb27cb3c7f9cbcffcc62cda58e0}{enable}}(\textcolor{keyword}{const}\ std::vector<float>\ \&status);}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00097\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_ae1cfd7081ec798c4ece265ec8493cdba}{reboot}}(\textcolor{keyword}{const}\ std::vector<bool>\ \&flag);}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00104\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_ae1b9b877dfb62382f4ae8bcef3e9ea09}{getError}}(\textcolor{keyword}{const}\ std::vector<bool>\ \&flag);}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00111\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_afe77c3c10c0b40295abd1e763702190d}{clearError}}(\textcolor{keyword}{const}\ std::vector<bool>\ \&flag);}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00119\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a5c9f4a8296657aba173d1f98e1d4d5d8}{resetLinearCount}}(\textcolor{keyword}{const}\ std::vector<float>\ \&linearCount);}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00127\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a6a28007ad6b56e3ec253056a778f375a}{setMotionCtrlConfig}}(\textcolor{keyword}{const}\ std::vector<MotionControllerConfig\ *>\ \&config);}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00135\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a216225350b531ca83a4e0ee0fa586848}{setMotorConfig}}(\textcolor{keyword}{const}\ std::vector<MotorConfig\ *>\ \&config);}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00143\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a646990669375b21eb92a31ad9e086868}{setTrapTraj}}(\textcolor{keyword}{const}\ std::vector<TrapTraj\ *>\ \&config);}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00150\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a6aed015149375f438c4e04c9b281c168}{saveConfig}}(\textcolor{keyword}{const}\ std::vector<bool>\ \&flag);}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00158\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_ae91a4090f92e2a31f57c3c7c9f1a3bb3}{setNetworkSetting}}(\textcolor{keyword}{const}\ std::vector<NetworkSetting\ *>\ \&config);}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00163\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a8235d142016d6b0840ae1278fffe4672}{getMotorRotorAbsPos}}(\textcolor{keyword}{const}\ std::vector<bool>\ \&flag);}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \textcolor{comment}{//\ For\ latency\ test}}
+\DoxyCodeLine{00166\ \ \ \textcolor{keywordtype}{void}\ setLatencyTest(\textcolor{keyword}{const}\ std::vector<bool>\ \&flag);}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \textcolor{comment}{\ \ /*******\ fw2\ .0\ *******/}}
+\DoxyCodeLine{00169\ \ \ \textcolor{keywordtype}{void}\ setInputPositionPt(\textcolor{keyword}{const}\ std::vector<PosPtInfo>\ \&param);}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \textcolor{keywordtype}{void}\ setInputVelocityPt(\textcolor{keyword}{const}\ std::vector<float>\ \&param);}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \ \ \textcolor{keywordtype}{void}\ setInputTorquePt(\textcolor{keyword}{const}\ std::vector<float>\ \&param);}
+\DoxyCodeLine{00174\ \textcolor{comment}{\ \ /*******\ fw2\ .0\ *******/}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00182\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_pnd_1_1_group_command_a29ae7dbb82e5bb53e4cb81e3b3cfc7cf}{RcuPower}}(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00183\ \ \ \textcolor{keywordtype}{void}\ RcuAV5VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00184\ \ \ \textcolor{keywordtype}{void}\ RcuV5VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00185\ \ \ \textcolor{keywordtype}{void}\ RcuV5VAPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00186\ \ \ \textcolor{keywordtype}{void}\ RcuV5VBPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00187\ \ \ \textcolor{keywordtype}{void}\ Rcu12VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00188\ \ \ \textcolor{keywordtype}{void}\ RcuFan12VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00189\ \ \ \textcolor{keywordtype}{void}\ Rcu19VPower(\textcolor{keyword}{const}\ std::vector<bool>\ \&status);}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \textcolor{keywordtype}{void}\ RcuBrakeCmd(\textcolor{keyword}{const}\ std::vector<RcuBrake>\ \&param);}
+\DoxyCodeLine{00192\ \ \ \textcolor{keywordtype}{void}\ RcuAdcOffset(\textcolor{keyword}{const}\ std::vector<float>\ \&param);}
+\DoxyCodeLine{00193\ \ \ \textcolor{keywordtype}{void}\ RcuFwUpgrade();}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \ \ \textcolor{comment}{//\ Encoder}}
+\DoxyCodeLine{00196\ \ \ \textcolor{keywordtype}{void}\ getEncoderAngle(\textcolor{keyword}{const}\ std::vector<float>\ \&param);}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00203\ \ \ PndGroupCommandPtr\ \mbox{\hyperlink{class_pnd_1_1_group_command_a74e0e3725aebda4005fd42c8e1485ae7}{internal\_}};}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00208\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_pnd_1_1_group_command_aa2ff642adc863837058345b463420ef6}{number\_of\_modules\_}};}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00214\ \ \ std::vector<PndCommandPtr>\ commands\_;}
+\DoxyCodeLine{00215\ \};}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \}\ \ \textcolor{comment}{//\ namespace\ Pnd}}
+
+\end{DoxyCode}

@@ -1,0 +1,40 @@
+\doxysection{group\+Feedback.\+hpp}
+\hypertarget{group_feedback_8hpp_source}{}\label{group_feedback_8hpp_source}\index{/Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/groupFeedback.hpp@{/Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/groupFeedback.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}aios.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }Pnd\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_pnd_1_1_group_feedback}{GroupFeedback}}\ final\ \{}
+\DoxyCodeLine{00014\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \mbox{\hyperlink{class_pnd_1_1_group_feedback}{GroupFeedback}}(\textcolor{keywordtype}{size\_t}\ number\_of\_modules);}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00023\ \ \ \mbox{\hyperlink{class_pnd_1_1_group_feedback}{GroupFeedback}}(PndGroupFeedbackPtr\ group\_feedback);}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00028\ \ \ \mbox{\hyperlink{class_pnd_1_1_group_feedback_a053805f72653dca1c4fe3ab7347b9bfa}{\string~GroupFeedback}}()\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00033\ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_pnd_1_1_group_feedback_ad39c728563f526eccba1443341bddcdf}{size}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{const}\ PndFeedbackPtr\ \&\mbox{\hyperlink{class_pnd_1_1_group_feedback_a9cf0fd477a7e0e3df1be8df7c80ff3d0}{operator[]}}(\textcolor{keywordtype}{size\_t}\ index)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00043\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_pnd_1_1_group_feedback_aa9b50c5f5d5b657808fe20a693283e9a}{Duration}}()\ \{\ \textcolor{keywordflow}{return}\ pndGroupFeedbackGetDuration(\mbox{\hyperlink{class_pnd_1_1_group_feedback_ac06b4d0f02cb57caec70a3cdd9bcc41c}{internal\_}});\ \};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00050\ \ \ PndGroupFeedbackPtr\ \mbox{\hyperlink{class_pnd_1_1_group_feedback_ac06b4d0f02cb57caec70a3cdd9bcc41c}{internal\_}};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00057\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ manage\_pointer\_lifetime\_;}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00062\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ number\_of\_modules\_;}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00067\ \ \ std::vector<PndFeedbackPtr>\ feedbacks\_;}
+\DoxyCodeLine{00068\ \};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \}\ \ \textcolor{comment}{//\ namespace\ Pnd}}
+
+\end{DoxyCode}

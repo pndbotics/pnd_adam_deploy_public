@@ -1,0 +1,63 @@
+\doxysection{Pnd\+::Group\+Feedback Class Reference}
+\hypertarget{class_pnd_1_1_group_feedback}{}\label{class_pnd_1_1_group_feedback}\index{Pnd::GroupFeedback@{Pnd::GroupFeedback}}
+
+
+A list of Feedback objects that can be received from a \doxylink{class_pnd_1_1_group}{Group} of modules; the \doxylink{class_pnd_1_1_group_feedback_ad39c728563f526eccba1443341bddcdf}{size()} must match the number of modules in the group.  
+
+
+
+
+{\ttfamily \#include $<$group\+Feedback.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pnd_1_1_group_feedback_a49a8c073b96b0470ddd15ddf668c1f21}\label{class_pnd_1_1_group_feedback_a49a8c073b96b0470ddd15ddf668c1f21} 
+{\bfseries Group\+Feedback} (size\+\_\+t number\+\_\+of\+\_\+modules)
+\begin{DoxyCompactList}\small\item\em Create a group feedback with the specified number of modules. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_pnd_1_1_group_feedback_ad13b970eff43d16764f7980dc39ac739}{Group\+Feedback}} (Pnd\+Group\+Feedback\+Ptr group\+\_\+feedback)
+\item 
+\Hypertarget{class_pnd_1_1_group_feedback_a053805f72653dca1c4fe3ab7347b9bfa}\label{class_pnd_1_1_group_feedback_a053805f72653dca1c4fe3ab7347b9bfa} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Group\+Feedback} () noexcept
+\begin{DoxyCompactList}\small\item\em Destructor cleans up group feedback object as necessary. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_group_feedback_ad39c728563f526eccba1443341bddcdf}\label{class_pnd_1_1_group_feedback_ad39c728563f526eccba1443341bddcdf} 
+size\+\_\+t {\bfseries size} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of module feedbacks in this group feedback. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_group_feedback_a9cf0fd477a7e0e3df1be8df7c80ff3d0}\label{class_pnd_1_1_group_feedback_a9cf0fd477a7e0e3df1be8df7c80ff3d0} 
+const Pnd\+Feedback\+Ptr \& {\bfseries operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t index) const
+\begin{DoxyCompactList}\small\item\em Access the feedback for an individual module. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_group_feedback_aa9b50c5f5d5b657808fe20a693283e9a}\label{class_pnd_1_1_group_feedback_aa9b50c5f5d5b657808fe20a693283e9a} 
+const int {\bfseries Duration} ()
+\begin{DoxyCompactList}\small\item\em Get the duration of the command sent to recv. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Pnd\+Group\+Feedback\+Ptr \mbox{\hyperlink{class_pnd_1_1_group_feedback_ac06b4d0f02cb57caec70a3cdd9bcc41c}{internal\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A list of Feedback objects that can be received from a \doxylink{class_pnd_1_1_group}{Group} of modules; the \doxylink{class_pnd_1_1_group_feedback_ad39c728563f526eccba1443341bddcdf}{size()} must match the number of modules in the group. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_pnd_1_1_group_feedback_ad13b970eff43d16764f7980dc39ac739}\label{class_pnd_1_1_group_feedback_ad13b970eff43d16764f7980dc39ac739} 
+\index{Pnd::GroupFeedback@{Pnd::GroupFeedback}!GroupFeedback@{GroupFeedback}}
+\index{GroupFeedback@{GroupFeedback}!Pnd::GroupFeedback@{Pnd::GroupFeedback}}
+\doxysubsubsection{\texorpdfstring{GroupFeedback()}{GroupFeedback()}}
+{\footnotesize\ttfamily Pnd\+::\+Group\+Feedback\+::\+Group\+Feedback (\begin{DoxyParamCaption}\item[{Pnd\+Group\+Feedback\+Ptr}]{group\+\_\+feedback }\end{DoxyParamCaption})}
+
+TODO\+: 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_pnd_1_1_group_feedback_ac06b4d0f02cb57caec70a3cdd9bcc41c}\label{class_pnd_1_1_group_feedback_ac06b4d0f02cb57caec70a3cdd9bcc41c} 
+\index{Pnd::GroupFeedback@{Pnd::GroupFeedback}!internal\_@{internal\_}}
+\index{internal\_@{internal\_}!Pnd::GroupFeedback@{Pnd::GroupFeedback}}
+\doxysubsubsection{\texorpdfstring{internal\_}{internal\_}}
+{\footnotesize\ttfamily Pnd\+Group\+Feedback\+Ptr Pnd\+::\+Group\+Feedback\+::internal\+\_\+}
+
+C-\/style group feedback object. NOTE\+: this should not be used except by library functions! 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/group\+Feedback.\+hpp\item 
+/\+Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/group\+Feedback.\+cpp\end{DoxyCompactItemize}

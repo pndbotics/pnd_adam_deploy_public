@@ -1,0 +1,132 @@
+\doxysection{Pnd\+::Lookup Class Reference}
+\hypertarget{class_pnd_1_1_lookup}{}\label{class_pnd_1_1_lookup}\index{Pnd::Lookup@{Pnd::Lookup}}
+
+
+Maintains a registry of network-\/connected modules and returns \doxylink{class_pnd_1_1_group}{Group} objects to the user.  
+
+
+
+
+{\ttfamily \#include $<$lookup.\+hpp$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_pnd_1_1_lookup_1_1_entry_list}{Entry\+List}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_pnd_1_1_lookup_a36810b699acd9f01c117abc0a513c79c}{Lookup}} (std\+::string \texorpdfstring{$\ast$}{*}addr=nullptr)
+\begin{DoxyCompactList}\small\item\em Creates a \doxylink{class_pnd_1_1_lookup}{Lookup} object which can create Module and \doxylink{class_pnd_1_1_group}{Group} references. Typically, only one \doxylink{class_pnd_1_1_lookup}{Lookup} object should exist at a time. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_lookup_a5b50ec7662d214c6a2628ea5234e3e61}\label{class_pnd_1_1_lookup_a5b50ec7662d214c6a2628ea5234e3e61} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+Lookup} () noexcept
+\begin{DoxyCompactList}\small\item\em Destructor frees all resources created by \doxylink{class_pnd_1_1_lookup}{Lookup} object, and stops the background query thread. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pnd_1_1_lookup_af58298b7c70665c68e1a787ef2186fa1}{set\+Net\+Works}} (std\+::string networks)
+\begin{DoxyCompactList}\small\item\em Sets the broadcast address for the lookup. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_lookup_aa4bfb7f47e2698fd5198ff3c2f6cfcc7}\label{class_pnd_1_1_lookup_aa4bfb7f47e2698fd5198ff3c2f6cfcc7} 
+std\+::string {\bfseries get\+Ctrl\+Box\+IP} ()
+\begin{DoxyCompactList}\small\item\em Get Ctrl\+Box ip address. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_pnd_1_1_group}{Group}} $>$ \mbox{\hyperlink{class_pnd_1_1_lookup_a03aaa8155c032e38e0cd78a825abf47d}{get\+Group\+From\+Family}} (const std\+::string \&family, int32\+\_\+t timeout\+\_\+ms=DEFAULT\+\_\+\+TIMEOUT)
+\begin{DoxyCompactList}\small\item\em Get a group from all known modules with the given family. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_lookup_a8a8e97423e21f3ee22d2a6161e5f39c4}\label{class_pnd_1_1_lookup_a8a8e97423e21f3ee22d2a6161e5f39c4} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_pnd_1_1_group}{Group}} $>$ {\bfseries get\+Group\+From\+Ips} (const std\+::vector$<$ std\+::string $>$ \&ips)
+\item 
+float \mbox{\hyperlink{class_pnd_1_1_lookup_add8ee6074c8a0fafd6cd277637e36cc0}{get\+Lookup\+Frequency\+Hz}} () const
+\begin{DoxyCompactList}\small\item\em Gets the rate \mbox{[}Hz\mbox{]} at which "{}discovery"{} packets are broadcast. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_pnd_1_1_lookup_ac899bc53f1e7213d16d429bd03371d6f}{set\+Lookup\+Frequency\+Hz}} (float frequency)
+\begin{DoxyCompactList}\small\item\em Sets the lookup rate \mbox{[}Hz\mbox{]}. \end{DoxyCompactList}\item 
+\Hypertarget{class_pnd_1_1_lookup_a7c82df0ac58774aa44db901f96f19223}\label{class_pnd_1_1_lookup_a7c82df0ac58774aa44db901f96f19223} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_pnd_1_1_lookup_1_1_entry_list}{Entry\+List}} $>$ {\bfseries get\+Entry\+List} ()
+\item 
+\Hypertarget{class_pnd_1_1_lookup_a967df604a07c12d12b63676c8e450530}\label{class_pnd_1_1_lookup_a967df604a07c12d12b63676c8e450530} 
+Device\+List \texorpdfstring{$\ast$}{*} {\bfseries get\+Device\+List} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Maintains a registry of network-\/connected modules and returns \doxylink{class_pnd_1_1_group}{Group} objects to the user. 
+
+Only one \doxylink{class_pnd_1_1_lookup}{Lookup} object is needed per application. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_pnd_1_1_lookup_a36810b699acd9f01c117abc0a513c79c}\label{class_pnd_1_1_lookup_a36810b699acd9f01c117abc0a513c79c} 
+\index{Pnd::Lookup@{Pnd::Lookup}!Lookup@{Lookup}}
+\index{Lookup@{Lookup}!Pnd::Lookup@{Pnd::Lookup}}
+\doxysubsubsection{\texorpdfstring{Lookup()}{Lookup()}}
+{\footnotesize\ttfamily Pnd\+::\+Lookup\+::\+Lookup (\begin{DoxyParamCaption}\item[{std\+::string \texorpdfstring{$\ast$}{*}}]{addr = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+
+
+Creates a \doxylink{class_pnd_1_1_lookup}{Lookup} object which can create Module and \doxylink{class_pnd_1_1_group}{Group} references. Typically, only one \doxylink{class_pnd_1_1_lookup}{Lookup} object should exist at a time. 
+
+Note that this call invokes a background thread to query the network for modules at regular intervals. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_pnd_1_1_lookup_a03aaa8155c032e38e0cd78a825abf47d}\label{class_pnd_1_1_lookup_a03aaa8155c032e38e0cd78a825abf47d} 
+\index{Pnd::Lookup@{Pnd::Lookup}!getGroupFromFamily@{getGroupFromFamily}}
+\index{getGroupFromFamily@{getGroupFromFamily}!Pnd::Lookup@{Pnd::Lookup}}
+\doxysubsubsection{\texorpdfstring{getGroupFromFamily()}{getGroupFromFamily()}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{class_pnd_1_1_group}{Group}} $>$ Pnd\+::\+Lookup\+::get\+Group\+From\+Family (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{family,  }\item[{int32\+\_\+t}]{timeout\+\_\+ms = {\ttfamily DEFAULT\+\_\+TIMEOUT} }\end{DoxyParamCaption})}
+
+
+
+Get a group from all known modules with the given family. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em family} & The family of each of the desired group modules. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A shared\+\_\+ptr with no reference if no group found in allotted time, or reference to a newly allocated group object corresponding to the given parameters otherwise. 
+\end{DoxyReturn}
+\Hypertarget{class_pnd_1_1_lookup_add8ee6074c8a0fafd6cd277637e36cc0}\label{class_pnd_1_1_lookup_add8ee6074c8a0fafd6cd277637e36cc0} 
+\index{Pnd::Lookup@{Pnd::Lookup}!getLookupFrequencyHz@{getLookupFrequencyHz}}
+\index{getLookupFrequencyHz@{getLookupFrequencyHz}!Pnd::Lookup@{Pnd::Lookup}}
+\doxysubsubsection{\texorpdfstring{getLookupFrequencyHz()}{getLookupFrequencyHz()}}
+{\footnotesize\ttfamily float Pnd\+::\+Lookup\+::get\+Lookup\+Frequency\+Hz (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Gets the rate \mbox{[}Hz\mbox{]} at which "{}discovery"{} packets are broadcast. 
+
+Defaults to 5 Hz. \Hypertarget{class_pnd_1_1_lookup_ac899bc53f1e7213d16d429bd03371d6f}\label{class_pnd_1_1_lookup_ac899bc53f1e7213d16d429bd03371d6f} 
+\index{Pnd::Lookup@{Pnd::Lookup}!setLookupFrequencyHz@{setLookupFrequencyHz}}
+\index{setLookupFrequencyHz@{setLookupFrequencyHz}!Pnd::Lookup@{Pnd::Lookup}}
+\doxysubsubsection{\texorpdfstring{setLookupFrequencyHz()}{setLookupFrequencyHz()}}
+{\footnotesize\ttfamily bool Pnd\+::\+Lookup\+::set\+Lookup\+Frequency\+Hz (\begin{DoxyParamCaption}\item[{float}]{frequency }\end{DoxyParamCaption})}
+
+
+
+Sets the lookup rate \mbox{[}Hz\mbox{]}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frequency} & The rate at which "{}discovery"{} packets get broadcast on the network to search for modules.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true on success, false on failure (e.\+g., invalid frequency) 
+\end{DoxyReturn}
+\Hypertarget{class_pnd_1_1_lookup_af58298b7c70665c68e1a787ef2186fa1}\label{class_pnd_1_1_lookup_af58298b7c70665c68e1a787ef2186fa1} 
+\index{Pnd::Lookup@{Pnd::Lookup}!setNetWorks@{setNetWorks}}
+\index{setNetWorks@{setNetWorks}!Pnd::Lookup@{Pnd::Lookup}}
+\doxysubsubsection{\texorpdfstring{setNetWorks()}{setNetWorks()}}
+{\footnotesize\ttfamily void Pnd\+::\+Lookup\+::set\+Net\+Works (\begin{DoxyParamCaption}\item[{std\+::string}]{networks }\end{DoxyParamCaption})}
+
+
+
+Sets the broadcast address for the lookup. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em networks} & A string pointer to a broadcast address. eg\+: "{}192.\+168.\+100.\+255,192.\+168.\+101.\+255"{} \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/lookup.\+hpp\item 
+/\+Users/lvhao/ws/pnd/sdk/pnd-\/cpp/src/lookup.\+cpp\end{DoxyCompactItemize}
