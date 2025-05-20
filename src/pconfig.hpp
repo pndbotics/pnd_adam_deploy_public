@@ -91,8 +91,13 @@ class PConfig {
         pcfg_[idx].abs_pos_zero = item.value()["absolute_pos_zero"].get<float>();
         pcfg_[idx].abs_pos_gear_ratio = item.value()["absolute_pos_gear_ratio"].get<float>();
         pcfg_[idx].abs_pos_dir = item.value()["absolute_pos_dir"].get<float>();
-        pcfg_[idx].motor_rotor_abs_pos = item.value()["motor_rotor_abs_pos"].get<float>();
-      } else {
+        try {
+          pcfg_[idx].motor_rotor_abs_pos = item.value()["motor_rotor_abs_pos"].get<float>();
+        } catch (std::exception& e) {
+          std::cout << "WARNING: joint" << item.key() << " motor_rotor_abs_pos not set in config file." << std::endl;
+          pcfg_[idx].motor_rotor_abs_pos = 0;
+        }
+       } else {
         std::cout << "ERROR: joint " << item.key() << " abs not found" << std::endl;
       }
     }
