@@ -10,7 +10,7 @@ we offer script for install the Dependencies below:
   - `sudo apt upgrade`
   - `sudo apt install wget libeigen3-dev libglfw3-dev libxinerama-dev libxcursor-dev libxi-dev libssl-dev libx11-dev`
 - run the install.sh
-```
+```bash
 sh install.sh
 ```
 ## Manual install Dependencies 
@@ -27,7 +27,7 @@ sh install.sh
   - There are three preliminary states: ZERO, MLP and STOP.
 
 ## If you run with ROS2
-```
+```bash
 #build the ROS2 publisher
   cd robotPublisher
   colcon build
@@ -39,20 +39,20 @@ sh install.sh
 ## Build
 To build the code:  
 - which will create folder build and folder bin in your project and install the required files into folder bin.
-```
+```bash
 cd robotPublisher
 source install/setup.bash
 cd ..
 sh build.sh adam_lite|adam_inspire|adam_standard real|mujoco ros2
 ```
 ## Before Run
-```
+```bash
 #open one more terminal
 ros2 run joy joy_node 
 
 ```
 ## Run ROS2 code
-```
+```bash
 ##in mujoco
 cd build_adam_lite_mujoco
 ./pnd_adam_deploy_public
@@ -64,7 +64,7 @@ sh run.sh
 
 If you need to clean your build results:
 - which will delete all contents in folder build and bin. If you just want to normal rebuild, you do not need to do this, but simply run `sh build.sh adam_lite real` again. 
-```
+```bash
 sh cleanrobot.sh
 ```
 
@@ -73,30 +73,30 @@ sh cleanrobot.sh
 ## Build
 To build the code:  
 - which will create folder build and folder bin in your project and install the required files into folder bin.
-```
+```bash
 sh build.sh adam_lite|adam_inspire|adam_standard real|mujoco
 ```
 
 
 If you need to clean your build results:
 - which will delete all contents in folder build and bin. If you just want to normal rebuild, you do not need to do this, but simply run `sh build.sh adam_lite real` again. 
-```
+```bash
 sh cleanrobot.sh
 ```
 
 ## Run
 To run this sdk, you should make sure the robot and the joystick are power on and the robot arms are in zero positions, then run:
-```
+```bash
 sh run.sh
 ```
 
 After the terminal displays the absolute positions of the joints and the following instruction :
-``` 
+```bash 
 confirm the motor para, press 1 and enter to confirm:
 ```
 check if all joints encoder are showing the right positions, and then press 1 and enter. The output should hopefully end with
 
-```
+```bash
 FSM start!
 ```
 Then press button A to go to state ZERO (all joints will go to zero positions). Button X to go to state MLP (for demo motion or MLP). Button B to go to state STOP (all joints will stop move in current positions).
