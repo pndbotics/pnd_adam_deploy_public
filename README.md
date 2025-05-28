@@ -26,9 +26,9 @@ sh install.sh
 - `src`: Contains joystick code and state machine code.
   - There are three preliminary states: ZERO, MLP and STOP.
 
-## If you run with ros2
+## If you run with ROS2
 ```
-#build the ros2 publisher
+#build the ROS2 publisher
   cd robotPublisher
   colcon build
   source install/setup.bash
@@ -51,7 +51,7 @@ sh build.sh adam_lite|adam_inspire|adam_standard real|mujoco ros2
 ros2 run joy joy_node 
 
 ```
-## Run ros2 code
+## Run ROS2 code
 ```
 ##in mujoco
 cd build_adam_lite_mujoco
@@ -68,7 +68,7 @@ If you need to clean your build results:
 sh cleanrobot.sh
 ```
 
-## If you run without ros2
+## If you run without ROS2
 
 ## Build
 To build the code:  
