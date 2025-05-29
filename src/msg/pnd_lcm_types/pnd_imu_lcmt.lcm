@@ -1,0 +1,9 @@
+struct pnd_imu_t
+{
+    double yaw;
+    double pitch;
+    double roll;
+    
+    double angular_velocity[3];
+    double linear_acceleration[3];
+}

@@ -1,0 +1,7 @@
+struct pnd_joint_cmd_t
+{
+    int32_t num_joints;
+    double dpos[num_joints];
+    double dvel[num_joints];
+    double dtau[num_joints];
+}

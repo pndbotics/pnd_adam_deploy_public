@@ -4,7 +4,7 @@ set -o errexit # exit on error
 
 adam_type=$1
 adam_env_type=$2
-ros_type=$3
+middleware_type=$3
 if [ "$adam_type" != "adam_lite" ] && [ "$adam_type" != "adam_inspire" ] && [ "$adam_type" != "adam_standard" ]; then
 	echo $adam_type
     echo "adam_type mast be adam_lite|adam_inspire|adam_standard. example: sh build.sh adam_lite real"
@@ -16,8 +16,8 @@ if [ "$adam_env_type" != "real" ] && [ "$adam_env_type" != "mujoco" ] && [ "$ada
     exit 1
 fi
 
-if [ "$ros_type" != "ros2" ]; then
-    ros_type=""
+if [ "$middleware_type" != "ros2" ] && [ "$middleware_type" != "lcm" ]; then
+    middleware_type=""
 fi
 
 root=$(pwd)
@@ -43,7 +43,7 @@ cmake -DCMAKE_BUILD_TYPE=release \
     -DCMAKE_INSTALL_PREFIX=${root} \
     -Dadam_type=$adam_type \
     -Dadam_env_type=$adam_env_type \
-    -Dros_type=$ros_type \
+    -Dmiddleware_type=$middleware_type \
     ..
 make -j12
 if [ "$adam_env_type" != "mujoco" ] && [ "$adam_env_type" != "webots" ]; then
