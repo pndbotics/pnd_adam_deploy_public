@@ -8,7 +8,7 @@ SET(CMAKE_CXX_FLAGS "-O2 -Wall")
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_PREFIX_PATH
     ${PROJECT_SOURCE_DIR}/libtorch/share/cmake/Torch
-    ${PROJECT_SOURCE_DIR}/third_party/libs/lcm-1.5.0-lib/lib/lcm/cmake
+    ${PROJECT_SOURCE_DIR}/third_party/lcm-1.5.0-lib/lib/lcm/cmake
 )
 
 FIND_PACKAGE(Eigen3 REQUIRED)
@@ -81,7 +81,7 @@ INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/robot_interface/include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/third_party)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/third_party/yaml-cpp-yaml-cpp-0.7.0/include)
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/third_party/libs/lcm-1.5.0-lib/include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/third_party/lcm-1.5.0-lib/include)
 
 if("${middleware_type}" STREQUAL "ros2")
     set(main_DIR ${PROJECT_SOURCE_DIR}/example/src/main_ros.cpp)
