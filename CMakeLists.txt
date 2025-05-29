@@ -6,8 +6,10 @@ enable_language(CXX)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_FLAGS "-O2 -Wall")
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
-SET(CMAKE_PREFIX_PATH ${PROJECT_SOURCE_DIR}/libtorch/share/cmake/Torch)
-SET(CMAKE_PREFIX_PATH ${PROJECT_SOURCE_DIR}/third_party/libs/lcm-1.5.0-lib/lib/lcm/cmake)
+SET(CMAKE_PREFIX_PATH
+    ${PROJECT_SOURCE_DIR}/libtorch/share/cmake/Torch
+    ${PROJECT_SOURCE_DIR}/third_party/libs/lcm-1.5.0-lib/lib/lcm/cmake
+)
 
 FIND_PACKAGE(Eigen3 REQUIRED)
 FIND_PACKAGE(Threads REQUIRED)
