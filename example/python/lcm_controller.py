@@ -22,7 +22,7 @@ imu_data = None
 send_cmd_flag = False
 joy = JoystickInput()
 lc = lcm.LCM()
-np_zero = np.zeros(25)
+np_zero = np.zeros(DOF_NUM)
 joint_pos_motion = np.array([
     # [-0.41, -0.04, -0.23, 0.81, -0.47, 0.0,
     # -0.41, 0.04, 0.23, 0.81, -0.47, 0.0,

@@ -77,7 +77,9 @@ class LcmRobotPublisher {
     }
   }
 
-  void lcm_handle() { lcm_.handle(); }
+  void lcm_handle() {
+    lcm_.handleTimeout(1);
+  }
 
  private:
   lcm::LCM lcm_;
@@ -94,15 +96,6 @@ int main(int argc, char** argv) {
   std::thread mujocoThread(&MujocoSim::simLoop, &mujocoSim);
   sleep(3);
 #endif
-  // create lcm publisher
-  auto robot_publisher = std::make_shared<LcmRobotPublisher>();
-  // create lcm thread
-  std::thread lcm_thread([&]() {
-    while (true) {
-      robot_publisher->lcm_handle();
-    }
-  });
-
   at::set_num_threads(1);          // Disables the intraop thread pool.
   at::set_num_interop_threads(1);  // Disables the interop thread pool.
 
@@ -125,6 +118,13 @@ int main(int argc, char** argv) {
   }
 
   DataHandler::getInstance().init();
+
+  auto robot_publisher = std::make_shared<LcmRobotPublisher>();
+  std::thread lcm_thread([&]() {
+    while (!framework.disableJoints) {
+      robot_publisher->lcm_handle();
+    }
+  });
 
   broccoli::core::Time start_time;
   broccoli::core::Time total_time;

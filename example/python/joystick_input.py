@@ -1,5 +1,5 @@
 
-from inputs import get_gamepad
+import struct
 from threading import Thread
 
 class JoystickInput:
@@ -8,27 +8,27 @@ class JoystickInput:
         self.cmd = False
         
     def _listen_for_events(self):
-        while True:
-            events = self._get_joystick_events()
-            for event in events:
-                if event.code == "ABS_HAT0X" and event.state != 0:
-                    self.cmd = True
-                    
-                # print(event.ev_type, event.code, event.state)
-
-    def _get_joystick_events(self):
-        return get_gamepad()
+        with open('/dev/input/js0', 'rb') as js_device:
+            while True:
+                event = js_device.read(8)
+                if event:
+                    time_val, value, type_, number = struct.unpack('IhBB', event)
+                    # print(f"时间: {time_val}, 值: {value}, 类型: {type_}, 编号: {number}")
+                    if type_ == 2 and value > 0 and number == 6:
+                        print("send cmd")
+                        self.cmd = True
     
     def get_cmd(self) -> bool:
         return self.cmd
 
 def main():
     joystick = JoystickInput()
-    while True:
-        events = joystick._get_joystick_events()
-        for event in events:
-            print(event.ev_type, event.code, event.state)
-
+    with open('/dev/input/js0', 'rb') as js_device:
+        while True:
+            event = js_device.read(8)
+            if event:
+                time_val, value, type_, number = struct.unpack('IhBB', event)
+                print(f"时间: {time_val}, 值: {value}, 类型: {type_}, 编号: {number}")
 
 if __name__ == "__main__":
     main()
