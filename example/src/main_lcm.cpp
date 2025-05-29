@@ -77,9 +77,7 @@ class LcmRobotPublisher {
     }
   }
 
-  void lcm_handle() {
-    lcm_.handleTimeout(1);
-  }
+  void lcm_handle() { lcm_.handleTimeout(1); }
 
  private:
   lcm::LCM lcm_;
@@ -144,6 +142,7 @@ int main(int argc, char** argv) {
     start_time = timer.currentTime();
 
     framework.getState(time_fsm, robot_data);  // get state (position, velocity, current) from robot
+    std::cout << "get state:" << robot_data.q_d_.tail(kRobotDof).transpose() << std::endl;
 
     robot_publisher->publish_robot_state(robot_data);
     robot_publisher->publish_imu(robot_data);
@@ -151,9 +150,11 @@ int main(int argc, char** argv) {
     get_state_time = timer.currentTime() - start_time;  // get state execution time
     if (JsHum::getInst().getStateChange() == "gotoMLP") {
       robot_publisher->get_latest_command(robot_data);
+      std::cout << "gotoMLP:" << robot_data.q_d_.tail(kRobotDof).transpose() << std::endl;
     }
     framework.runFSM();                // run fsm (The calculation time cannot exceed 1.5ms)
     framework.setCommand(robot_data);  // send commands to joints
+    std::cout << "setCommand:" << robot_data.q_d_.tail(kRobotDof).transpose() << std::endl;
 
     fsm_time = timer.currentTime() - start_time - get_state_time;  // Finite state machine execution time
 
