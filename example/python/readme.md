@@ -10,7 +10,7 @@ Before running, open a terminal and run the following commands:
 - `pip install numpy==1.24`
 - `pip install scipy`
 
-### 💻Run in Mujoco
+### 💻Run on Mujoco
 If you want to use mujoco, do the follwing:
 1. `sh build.sh adam_lite mujoco lcm`
 2. `cd build_adam_lite_mujoco && ./pnd_adam_deploy_public`
@@ -18,7 +18,7 @@ If you want to use mujoco, do the follwing:
 4. Open a new terminal. Enter `pnd_adam_deploy_public` root directory, run `python example/python/lcm_controller.py`
 5. press `Right` button (the key on the cross gamepad).
 
-### 🤖Run in real robot
+### 🤖Run on real robot
 Before running on the real robot, make sure the robot is `HANGING` 🪢properly.  The foot should be off the ground. Double check before use!!!  ⚠️⚠️⚠️
 
 If the preparation is finished, proceed to the following:
