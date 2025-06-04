@@ -101,3 +101,6 @@ FSM start!
 ```
 Then press button A to go to state ZERO (all joints will go to zero positions). Button X to go to state MLP (for demo motion or MLP). Button B to go to state STOP (all joints will stop move in current positions).
 Press button LT and RT simultaneously to disable all joints. Press button LB and RB simultaneously to power off all joints. 
+
+## If you want to use LCM
+Please check the `pnd_adam_deploy_public/example/python/readme.md`
