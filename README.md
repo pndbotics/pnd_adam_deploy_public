@@ -103,4 +103,4 @@ Then press button A to go to state ZERO (all joints will go to zero positions). 
 Press button LT and RT simultaneously to disable all joints. Press button LB and RB simultaneously to power off all joints. 
 
 ## If you want to use LCM
-Please check the `pnd_adam_deploy_public/example/python/readme.md`
+Please check the [LCM readme](./example/python/readme.md)
