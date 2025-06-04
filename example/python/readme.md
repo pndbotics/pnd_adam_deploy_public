@@ -5,7 +5,7 @@
 ### dependence
 
 - `pip install lcm`
-- `pip install numpy`
+- `pip install numpy==1.24`
 - `pip install scipy`
 
 ### run in mujoco
