@@ -226,7 +226,7 @@ Please check the [LCM readme](./example/python/readme.md)
 
 The PD controller:
 
- $\tau=K_p*e_p+K_d*e_v$ (1)
+$\tau$ =K_p*e_p+K_d*e_v$ (1)
 
 $K_p$ : stiffness of PD controller
 
@@ -243,7 +243,7 @@ $\tau$ : the torque worked on end
 The PID controller:
 $I=P_p*P_v*e_p+P_v*e_v$ (2)
 
-$\tau'=g*I*K_t=g*(P_p*P_v*K_t*e_p+P_v*K_t*e_v)$ (3)
+$\tau'$ =g*I*K_t=g*(P_p*P_v*K_t*e_p+P_v*K_t*e_v)$ (3)
 
 $P_p$ : proportional parameter of position control loop PID controller
 
@@ -263,12 +263,12 @@ $\tau'$ : the torque worked on end
 
 For sim to real purpose, we need $\tau=\tau'$, then we can get:
 
-$K_p=g*P_p*P_v*K_t$ (4)
+$K_p$ =g*P_p*P_v*K_t$ (4)
 
-$K_d=g*P_v*K_t$ (5)
+$K_d$ =g*P_v*K_t$ (5)
 
-$P_v=K_d/(K_t*g)$ (6)
+$P_v$ =K_d/(K_t*g)$ (6)
 
-$P_p=K_p/K_d$ (7) 
+$P_p$ =K_p/K_d$ (7) 
 
 
