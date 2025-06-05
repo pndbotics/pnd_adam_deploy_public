@@ -57,9 +57,9 @@ class LcmRobotPublisher {
   }
 
   void publish_imu(const RobotData& robot_data) {
-    imu_msg_.roll = robot_data.imu_data_[0];
+    imu_msg_.yaw = robot_data.imu_data_[0];
     imu_msg_.pitch = robot_data.imu_data_[1];
-    imu_msg_.yaw = robot_data.imu_data_[2];
+    imu_msg_.roll = robot_data.imu_data_[2];
 
     for (int i = 0; i < 3; i++) {
       imu_msg_.angular_velocity[i] = robot_data.imu_data_[i + 3];
