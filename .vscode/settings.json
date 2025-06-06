@@ -1,5 +1,12 @@
 {
     "files.associations": {
         "iostream": "cpp"
-    }
+    },
+
+    "python.autoComplete.extraPaths": [
+        "${workspaceFolder}/src/msg",
+    ],
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/src/msg",
+    ],
 }
