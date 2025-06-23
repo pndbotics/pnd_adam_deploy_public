@@ -1,4 +1,5 @@
-# 🛠️PND Adam Deploy SDK LCM branch
+
+# 🛠️PND Adam Deploy SDK
 
 There are two ways to use PND Adam Deploy SDK: Build from source or use the docker.
 
