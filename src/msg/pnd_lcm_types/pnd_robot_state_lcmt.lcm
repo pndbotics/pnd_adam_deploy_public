@@ -1,0 +1,7 @@
+struct pnd_robot_state_t
+{
+    int32_t num_joints;
+    double apos[num_joints];
+    double avel[num_joints];
+    double atau[num_joints];
+}

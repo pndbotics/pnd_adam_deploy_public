@@ -6,20 +6,24 @@ enable_language(CXX)
 SET(CMAKE_CXX_STANDARD 17)
 SET(CMAKE_CXX_FLAGS "-O2 -Wall")
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
-SET(CMAKE_PREFIX_PATH ${PROJECT_SOURCE_DIR}/libtorch/share/cmake/Torch)
+SET(CMAKE_PREFIX_PATH
+    ${PROJECT_SOURCE_DIR}/libtorch/share/cmake/Torch
+    ${PROJECT_SOURCE_DIR}/third_party/lcm-1.5.0-lib/lib/lcm/cmake
+)
 
 FIND_PACKAGE(Eigen3 REQUIRED)
 FIND_PACKAGE(Threads REQUIRED)
 FIND_PACKAGE(Torch REQUIRED)
+FIND_PACKAGE(lcm REQUIRED)
 include(FetchContent)
 
 set(adam_type CACHE STRING "adam type: adam_lite or adam_standard or adam_inspire")
 set(adam_env_type CACHE STRING "adam env type: real or mujoco or webots")
-set(ros_type CACHE STRING "ros_type: ros2 or null")
+set(middleware_type CACHE STRING "middleware_type: ros2 or null")
 
 MESSAGE("-- adam_type: ${adam_type}")
 MESSAGE("-- adam_env_type: ${adam_env_type}")
-MESSAGE("-- ros_type: ${ros_type}")
+MESSAGE("-- middleware_type: ${middleware_type}")
 
 if (${adam_type} STREQUAL "adam_lite")
     ADD_DEFINITIONS(-DADAM_LITE)
@@ -45,7 +49,7 @@ else()
     MESSAGE(FATAL_ERROR "adam_env_type must be real or mujoco or webots")
 endif()
 
-if("${ros_type}" STREQUAL "ros2")
+if("${middleware_type}" STREQUAL "ros2")
     ADD_DEFINITIONS(-Dros2)
     find_package(rclcpp REQUIRED)
     find_package(robotstatepub REQUIRED) 
@@ -64,7 +68,7 @@ LINK_DIRECTORIES(src/pnd-cpp-sdk/pnd/lib/linux_x86_64)
 LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/robot_interface/lib)
 LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/third_party/libs)
 # ros
-if("${ros_type}" STREQUAL "ros2")
+if("${middleware_type}" STREQUAL "ros2")
     include_directories(${rclcpp_INCLUDE_DIRS})
     include_directories(${PROJECT_SOURCE_DIR}/robotPublisher/include)
 endif()
@@ -77,9 +81,12 @@ INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/robot_interface/include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/third_party)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/third_party/yaml-cpp-yaml-cpp-0.7.0/include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/third_party/lcm-1.5.0-lib/include)
 
-if("${ros_type}" STREQUAL "ros2")
+if("${middleware_type}" STREQUAL "ros2")
     set(main_DIR ${PROJECT_SOURCE_DIR}/example/src/main_ros.cpp)
+elseif("${middleware_type}" STREQUAL "lcm")
+    set(main_DIR ${PROJECT_SOURCE_DIR}/example/src/main_lcm.cpp)
 else()
     set(main_DIR ${PROJECT_SOURCE_DIR}/example/src/main.cpp)
 endif()
@@ -128,17 +135,18 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC
     "${TORCH_LIBRARIES}" 
     RobotInterface
     yaml-cpp
+    lcm
     pnd pndc++
     ${SIM_DEPENDENCIES}
 )
 
-if("${ros_type}" STREQUAL "ros2")
+if("${middleware_type}" STREQUAL "ros2")
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC 
     rclcpp::rclcpp  
 )
 endif()
 
-if("${ros_type}" STREQUAL "ros2")
+if("${middleware_type}" STREQUAL "ros2")
     ament_target_dependencies(${PROJECT_NAME} PUBLIC
     rclcpp
     robotstatepub

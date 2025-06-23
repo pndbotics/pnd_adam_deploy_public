@@ -1,0 +1,6 @@
+/libtorch
+/bin
+/build_*
+
+# python
+__pycache__/

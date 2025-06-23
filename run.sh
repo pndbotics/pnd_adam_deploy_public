@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cd ./bin/python_scripts
 python3 read_abs.py
 result=`python3 check_abs.py`

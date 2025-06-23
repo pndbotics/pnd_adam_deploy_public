@@ -1,3 +1,4 @@
+
 # 🛠️PND Adam Deploy SDK
 
 There are two ways to use PND Adam Deploy SDK: Build from source or use the docker.
@@ -216,6 +217,9 @@ sh run.sh
 When the terminal displays 'FSM start!' After the information can start to control.
 Press button A to make all joint of the robot return to the semi-squat zero position; Press button X to make the robot run MLP or DEMO; Press button B to make all joints stop at the current position; Press LT and RT keys at the same time disables the joint and exits the control program; Press LB and RB at the sime time to power on and off the joint.
 
+
+## If you want to use LCM
+Please check the [LCM readme](./example/python/readme.md)
 
 ### 🔣Kp,Kd Paramerter Explanation
 
