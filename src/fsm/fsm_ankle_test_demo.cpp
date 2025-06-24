@@ -27,7 +27,7 @@ void StateAnkleTestDemo::run() {
   robot_data_->q_dot_d_.tail(kRobotDof) = robot_data_->q_dot_a_.tail(kRobotDof);
   robot_data_->tau_d_.setZero();
   Eigen::VectorXd ankle_val = Eigen::VectorXd::Zero(ankle_ids_.size());
-  for (int i = 0; i < ankle_ids_.size(); i++) {
+  for (size_t i = 0; i < ankle_ids_.size(); i++) {
     ankle_val[i] = 2 * sin(2 * M_PI * timer_);
   }
   setInfoFromJointIds(ankle_val, ankle_ids_, robot_data_->tau_d_);
