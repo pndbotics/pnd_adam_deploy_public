@@ -9,6 +9,7 @@
 #include "robot_handler.h"
 
 int main(int argc, char **argv) {
+  std::cout << "PND Adam Deploy Public Example" << std::endl;
 #ifdef MUJOCO
   MujocoSim mujocoSim;
   std::thread mujocoThread(&MujocoSim::simLoop, &mujocoSim);

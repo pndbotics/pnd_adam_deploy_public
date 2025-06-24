@@ -6,15 +6,12 @@
 #include "pconfig.hpp"
 #include "putil.h"
 
-// yaw pitch roll gyro_x gyro_y gyro_z acc_x acc_y acc_z
-Eigen::VectorXd vnIMU::imuData = Eigen::VectorXd::Zero(9);
-
 RealRobot::RealRobot() { joint_interface_ = std::make_unique<JointInterface>(); }
 
-RealRobot::~RealRobot() {}
+RealRobot::~RealRobot() { imu_.close(); }
 
 AdamStatusCode RealRobot::init() {
-  auto res = imu_.initIMU();
+  auto res = imu_.initialize();
   if (!res) {
     std::cout << "initIMU failed" << std::endl;
     return AdamStatusCode::AdamStatusFailure;
@@ -141,7 +138,7 @@ AdamStatusCode RealRobot::init() {
 }
 
 AdamStatusCode RealRobot::getState(double t, RobotData &robot_data) {
-  robot_data.imu_data_ = vnIMU::imuData;
+  robot_data.imu_data_ = imu_.getImuData();
   joint_interface_->getState(joint_pos_, joint_vel_, joint_tau_);
   robot_data.error_state_ = joint_interface_->joint_error_;
   robot_data.q_a_.tail(kRobotDof) = joint_pos_;
