@@ -4,7 +4,6 @@
 #include "imu.hpp"
 #include "joint_interface.h"
 #include "robot_common.hpp"
-#include "vnIMU.h"
 
 class RealRobot : public RobotCommon {
  public:

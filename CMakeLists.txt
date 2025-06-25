@@ -128,6 +128,8 @@ else()
     set(AgentSrc 
         ${PROJECT_SOURCE_DIR}/src/real_robot.cpp 
         third_party/vnIMU/src/vnIMU.cpp
+        src/imu.cpp
+        src/imu_check.cpp
     )
 endif ()
 
@@ -144,7 +146,6 @@ ADD_EXECUTABLE(${PROJECT_NAME}
     src/robot_handler.cpp
     src/joint_interface.cpp
     src/putil.cpp
-    src/imu_check.cpp
 )
 
 # And link the library against the executable
