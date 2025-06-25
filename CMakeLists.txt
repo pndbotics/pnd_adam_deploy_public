@@ -144,7 +144,7 @@ ADD_EXECUTABLE(${PROJECT_NAME}
     src/robot_handler.cpp
     src/joint_interface.cpp
     src/putil.cpp
-    src/imu_check_net.cpp
+    src/imu_check.cpp
 )
 
 # And link the library against the executable
