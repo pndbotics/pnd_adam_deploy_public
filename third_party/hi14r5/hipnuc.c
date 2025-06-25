@@ -117,7 +117,7 @@ int hipnuc_init(void) {
   pthread_rwlock_init(&rwlock, NULL);
   atomic_store(&exit_flag, false);
 
-  hipnuc_open("/dev/ttyUSB0");
+  hipnuc_open("/dev/ttyUSB1");
 
   ret = pthread_create(&imu_thread, NULL, hip_imu_run, NULL);
   if (ret != 0) {

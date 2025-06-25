@@ -10,6 +10,8 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/spdlog.h"
 
+extern Eigen::VectorXd imu2_data;
+
 class DataHandler {
  public:
   static DataHandler& getInstance() {
@@ -41,14 +43,15 @@ class DataHandler {
                  const broccoli::core::Time& fsm_time, const broccoli::core::Time& cmd_time,
                  const broccoli::core::Time& start_time, const broccoli::core::Time& total_time,
                  const broccoli::core::Time& timer, int cur_state) {
-    robot_data.dataL(0) = timeFSM;
-    robot_data.dataL(1) = get_state_time.m_nanoSeconds * 1e-6;
-    robot_data.dataL(2) = fsm_time.m_nanoSeconds * 1e-6;
-    robot_data.dataL(3) = cmd_time.m_nanoSeconds * 1e-6;
-    robot_data.dataL(4) = (timer.currentTime() - start_time).m_nanoSeconds * 1e-6;
-    robot_data.dataL(5) = total_time.m_nanoSeconds * 1e-6;
-    robot_data.dataL(6) = cur_state;
-    robot_data.dataL.segment(7, 9) = robot_data.imu_data_;
+    // robot_data.dataL(0) = timeFSM;
+    // robot_data.dataL(1) = get_state_time.m_nanoSeconds * 1e-6;
+    // robot_data.dataL(2) = fsm_time.m_nanoSeconds * 1e-6;
+    // robot_data.dataL(3) = cmd_time.m_nanoSeconds * 1e-6;
+    // robot_data.dataL(4) = (timer.currentTime() - start_time).m_nanoSeconds * 1e-6;
+    // robot_data.dataL(5) = total_time.m_nanoSeconds * 1e-6;
+    // robot_data.dataL(6) = cur_state;
+    robot_data.dataL.segment(0, 9) = imu2_data;
+    robot_data.dataL.segment(9, 9) = robot_data.imu_data_;
   }
 
   void cacheData(RobotData* robot_data, double timer) {

@@ -6,6 +6,8 @@
 #include "pconfig.hpp"
 #include "putil.h"
 
+Eigen::VectorXd imu2_data = Eigen::VectorXd::Zero(9);
+
 RealRobot::RealRobot() { joint_interface_ = std::make_unique<JointInterface>(); }
 
 RealRobot::~RealRobot() { imu_.close(); }
@@ -138,7 +140,8 @@ AdamStatusCode RealRobot::init() {
 }
 
 AdamStatusCode RealRobot::getState(double t, RobotData &robot_data) {
-  robot_data.imu_data_ = imu_.getImuData();
+  robot_data.imu_data_ = imu_.getImu2Data();
+  imu2_data = imu_.getImuData();
   joint_interface_->getState(joint_pos_, joint_vel_, joint_tau_);
   robot_data.error_state_ = joint_interface_->joint_error_;
   robot_data.q_a_.tail(kRobotDof) = joint_pos_;

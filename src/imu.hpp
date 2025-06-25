@@ -45,6 +45,7 @@ class ChImu : public ImuInterface {
                                          : (imu_data[2] / 180.0 + 1.0) * M_PI;  // roll + pi, modify to be in [-pi,pi]
     hi_newIMUData[1] = -hi_newIMUData[1];
     hi_newIMUData[2] = -hi_newIMUData[2];
+    hi_newIMUData[2] += 0.015; // chaohe roll offset
     hi_newIMUData.tail(6) << imu_data[3] / 180.0 * M_PI, imu_data[4] / 180.0 * M_PI, imu_data[5] / 180.0 * M_PI,
         imu_data[6] * 9.81, imu_data[7] * 9.81, imu_data[8] * 9.81;
     hi_newIMUData.block(3, 0, 3, 1) = R_hi14r5 * hi_newIMUData.block(3, 0, 3, 1);
@@ -64,20 +65,29 @@ class ImuHandler {
   ImuHandler() = default;
   ~ImuHandler() = default;
   bool initialize() {
-    ImuType imu_type = checkImuType();
-    if (imu_type == ImuType::VN100_IMU) {
-      imu_interface = std::make_shared<Vn100Imu>();
-      return imu_interface->initialize();
-    } else if (imu_type == ImuType::CH_IMU) {
-      imu_interface = std::make_shared<ChImu>();
-      return imu_interface->initialize();
-    } else {
-      return false;
-    }
+    // ImuType imu_type = checkImuType();
+    // if (imu_type == ImuType::VN100_IMU) {
+    //   imu_interface = std::make_shared<Vn100Imu>();
+    //   return imu_interface->initialize();
+    // } else if (imu_type == ImuType::CH_IMU) {
+    //   imu_interface = std::make_shared<ChImu>();
+    //   return imu_interface->initialize();
+    // } else {
+    //   return false;
+    // }
+    imu_interface = std::make_shared<Vn100Imu>();
+    imu_2 = std::make_shared<ChImu>();
+    imu_interface->initialize();
+    imu_2->initialize();
+    return true;
   }
   const Eigen::VectorXd& getImuData() const { return imu_interface->getImuData(); }
+  const Eigen::VectorXd& getImu2Data() const { return imu_2->getImuData(); }
   bool close() {
     if (imu_interface) {
+      if (imu_2) {
+        imu_2->close();
+      }
       return imu_interface->close();
     }
     return true;
@@ -85,4 +95,5 @@ class ImuHandler {
 
  private:
   std::shared_ptr<ImuInterface> imu_interface = nullptr;
+  std::shared_ptr<ImuInterface> imu_2 = nullptr;
 };
