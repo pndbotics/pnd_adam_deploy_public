@@ -105,8 +105,6 @@ elseif("${middleware_type}" STREQUAL "lcm")
 else()
     set(main_DIR ${PROJECT_SOURCE_DIR}/example/src/main.cpp)
 endif()
-AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/third_party/vnIMU/src/vn vn_DIR)
-AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/third_party/hi14r5 HI14R5_DIR)	
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/fsm fsm_DIR)
 
 if (${adam_env_type} STREQUAL "webots")
@@ -125,19 +123,19 @@ elseif(${adam_env_type} STREQUAL "mujoco")
     mujoco::mujoco
     glfw)
 else()
-    set(AgentSrc 
+    set(AgentSrc
         ${PROJECT_SOURCE_DIR}/src/real_robot.cpp 
         third_party/vnIMU/src/vnIMU.cpp
         src/imu.cpp
         src/imu_check.cpp
     )
-endif ()
+    AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/third_party/vnIMU/src/vn AgentSrc)
+    AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/third_party/hi14r5 AgentSrc)
+endif()
 
 # Setup the target executable
 ADD_EXECUTABLE(${PROJECT_NAME}
     ${main_DIR}
-    ${vn_DIR}
-    ${HI14R5_DIR}
     ${fsm_DIR}
     ${AgentSrc} 
     src/basic_function.cpp
