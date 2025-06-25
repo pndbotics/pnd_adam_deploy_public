@@ -45,6 +45,7 @@ class ChImu : public ImuInterface {
                                          : (imu_data[2] / 180.0 + 1.0) * M_PI;  // roll + pi, modify to be in [-pi,pi]
     hi_newIMUData[1] = -hi_newIMUData[1];
     hi_newIMUData[2] = -hi_newIMUData[2];
+    hi_newIMUData[2] += 0.015;  // add offset to chaohe roll
     hi_newIMUData.tail(6) << imu_data[3] / 180.0 * M_PI, imu_data[4] / 180.0 * M_PI, imu_data[5] / 180.0 * M_PI,
         imu_data[6] * 9.81, imu_data[7] * 9.81, imu_data[8] * 9.81;
     hi_newIMUData.block(3, 0, 3, 1) = R_hi14r5 * hi_newIMUData.block(3, 0, 3, 1);
