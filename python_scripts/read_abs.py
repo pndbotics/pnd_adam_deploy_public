@@ -50,35 +50,6 @@ abs_angle_dict = {}
 motor_rotor_angle_dict = {}
 
 
-# Get the abs angle of each device
-def get_abs_angle(address_list, angle_dict):
-    data_dict = {
-        "id": 1,
-        "method": "Encoder.Angle",
-        "params": "",
-    }
-    json_string = json.dumps(data_dict)
-
-    for i in address_list:
-        try:
-            tcp_socket_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            tcp_socket_client.settimeout(0.03)
-            tcp_socket_client.connect((i, remote_port_number))
-            tcp_socket_client.send(json_string.encode("utf-8"))
-            received_data = tcp_socket_client.recv(1024)
-
-            json_object = json.loads(received_data.decode("utf-8"))
-            if json_object["id"] == 1:
-                abs_data = {
-                    "angle": json_object["result"]["angle"],
-                    "radian": json_object["result"]["radian"],
-                }
-                angle_dict[i] = abs_data
-            tcp_socket_client.close()
-        except OSError as e:
-            print(f"{i}: get abs angle failed! {e}")
-
-
 def get_motor_rotor_abs_pos(address_list, motor_rotor_angle_dict):
     data_dict = {
         "method": "GET",
@@ -156,6 +127,7 @@ def merge_dicts(dict1, dict2):
 abs_version_dict = {ip_addr: None for ip_addr in ABS_IPS}
 device_info_dict = {"id": 0, "method": "device.info"}
 encoder_angle_dict = {"id": 0, "method": "encoder.angle"}
+old_encoder_angle_dict = {"id": 1, "method": "Encoder.Angle", "params": ""}
 
 
 class UDPClientProtocol:
@@ -222,8 +194,18 @@ async def get_new_abs_angle_handle(host, on_response, on_error):
     )
     return transport
 
+async def get_old_abs_angle_handle(host, on_response, on_error):
+    loop = asyncio.get_running_loop()
+    transport, protocol = await loop.create_datagram_endpoint(
+        lambda: UDPClientProtocol(
+            host, json.dumps(old_encoder_angle_dict), on_response, on_error
+        ),
+        remote_addr=(host, 2334),
+    )
+    return transport
 
-async def get_new_abs_angle():
+
+async def get_all_abs_angle():
     def handle_response(data, addr):
         print(f"Received from {addr}: {data.decode()}")
         json_object = json.loads(data.decode("utf-8"))
@@ -238,7 +220,10 @@ async def get_new_abs_angle():
 
     tasks = []
     for host in ABS_IPS:
-        task = get_new_abs_angle_handle(host, handle_response, handle_error)
+        if abs_version_dict[host] == AbsVerEnum.ABS_VER_OLD:
+            task = get_old_abs_angle_handle(host, handle_response, handle_error)
+        elif abs_version_dict[host] == AbsVerEnum.ABS_VER_NEW:
+            task = get_new_abs_angle_handle(host, handle_response, handle_error)
         tasks.append(task)
 
     await asyncio.gather(*tasks)
@@ -250,26 +235,12 @@ async def get_new_abs_angle():
             print(f"get new abs angle failed! {host}")
 
 
-def check_abs_version():
-    if len(set(abs_version_dict.values())) != 1:
-        print("abs version inconsistent!")
-        # exit(1)
-    return abs_version_dict[ABS_IPS[0]]
-
-
 def main():
     abs_file = open("source/abs.json", mode="w+", encoding="utf-8")
     asyncio.run(get_abs_info())
     print(abs_version_dict)
-    abs_version = check_abs_version()
-    print(f"abs version: {abs_version}")
-    if abs_version is AbsVerEnum.ABS_VER_OLD:
-        get_abs_angle(ABS_IPS, abs_angle_dict)
-    elif abs_version is AbsVerEnum.ABS_VER_NEW:
-        asyncio.run(get_new_abs_angle())
-    else:
-        print("abs version error!")
-        exit(1)
+    
+    asyncio.run(get_all_abs_angle())
     print(f"abs angle dict: {abs_angle_dict}")
     print("read abs complete!")
     read_motor_rotor_abs_pos()
