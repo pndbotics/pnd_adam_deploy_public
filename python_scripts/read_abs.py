@@ -140,7 +140,7 @@ class UDPClientProtocol:
 
     def connection_made(self, transport):
         self.transport = transport
-        print("Send:", self.message)
+        print(f"Send to {self.host}: {self.message}")
         self.transport.sendto(self.message.encode())
 
     def datagram_received(self, data, addr):
@@ -179,7 +179,7 @@ async def get_abs_info():
         tasks.append(task)
 
     await asyncio.gather(*tasks)
-    await asyncio.sleep(0.2)
+    await asyncio.sleep(0.7)
     for task in tasks:
         task.close()
 
@@ -224,10 +224,13 @@ async def get_all_abs_angle():
             task = get_old_abs_angle_handle(host, handle_response, handle_error)
         elif abs_version_dict[host] == AbsVerEnum.ABS_VER_NEW:
             task = get_new_abs_angle_handle(host, handle_response, handle_error)
+        else:
+            print(f"Unknown ABS version for host {host}")
+            continue
         tasks.append(task)
 
     await asyncio.gather(*tasks)
-    await asyncio.sleep(0.2)
+    await asyncio.sleep(0.7)
     for task in tasks:
         task.close()
     for host in ABS_IPS:
@@ -237,8 +240,10 @@ async def get_all_abs_angle():
 
 def main():
     abs_file = open("source/abs.json", mode="w+", encoding="utf-8")
-    asyncio.run(get_abs_info())
-    print(abs_version_dict)
+    for _ in range(3):
+        asyncio.run(get_abs_info())
+    for abs_ip, abs_type in abs_version_dict.items():
+        print(abs_ip, abs_type)
     
     asyncio.run(get_all_abs_angle())
     print(f"abs angle dict: {abs_angle_dict}")
