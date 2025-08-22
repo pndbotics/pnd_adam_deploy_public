@@ -15,7 +15,6 @@ FIND_PACKAGE(Eigen3 REQUIRED)
 FIND_PACKAGE(Threads REQUIRED)
 FIND_PACKAGE(Torch REQUIRED)
 FIND_PACKAGE(lcm REQUIRED)
-include(FetchContent)
 
 set(adam_type CACHE STRING "adam type: adam_lite or adam_standard or adam_inspire")
 set(adam_env_type CACHE STRING "adam env type: real or mujoco or webots")
@@ -58,6 +57,22 @@ else()    # nothing to do
     message("-- ros2 False")
 endif()
 
+include(FetchContent)
+FetchContent_Declare(
+    libserial
+    GIT_REPOSITORY https://gitee.com/clvhao/libserial.git
+    GIT_TAG        master
+)
+option(LIBSERIAL_ENABLE_TESTING OFF)
+option(LIBSERIAL_BUILD_EXAMPLES OFF)
+option(LIBSERIAL_PYTHON_ENABLE OFF)
+option(LIBSERIAL_BUILD_DOCS OFF)
+set(CMAKE_INSTALL_LIBDIR bin)
+set(CMAKE_INSTALL_INCLUDEDIR ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR})
+set(CMAKE_INSTALL_DATAROOTDIR ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_INSTALL_DATAROOTDIR})
+FetchContent_MakeAvailable(libserial)
+include_directories(${LibSerial_SOURCE_DIR}/src)
+
 SET(PND_DIR src/pnd-cpp-sdk)
 SET(pnd_cpp_sdk_build_dir pnd-cpp-sdk-${CMAKE_BUILD_TYPE})
 STRING(TOLOWER ${pnd_cpp_sdk_build_dir} pnd_cpp_sdk_build_dir)
@@ -76,7 +91,7 @@ endif()
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/src)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/src/pnd-cpp-sdk/src)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/src/pnd-cpp-sdk/pnd/include)
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/src/vnIMU/include)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/third_party/vnIMU/include)
 INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/robot_interface/include)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/third_party)
@@ -90,7 +105,6 @@ elseif("${middleware_type}" STREQUAL "lcm")
 else()
     set(main_DIR ${PROJECT_SOURCE_DIR}/example/src/main.cpp)
 endif()
-AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/vnIMU/src/vn vn_DIR)
 AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/fsm fsm_DIR)
 
 if (${adam_env_type} STREQUAL "webots")
@@ -109,16 +123,19 @@ elseif(${adam_env_type} STREQUAL "mujoco")
     mujoco::mujoco
     glfw)
 else()
-    set(AgentSrc 
+    set(AgentSrc
         ${PROJECT_SOURCE_DIR}/src/real_robot.cpp 
-        src/vnIMU/src/vnIMU.cpp
+        third_party/vnIMU/src/vnIMU.cpp
+        src/imu.cpp
+        src/imu_check.cpp
     )
-endif ()
+    AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/third_party/vnIMU/src/vn AgentSrc)
+    AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/third_party/hi14r5 AgentSrc)
+endif()
 
 # Setup the target executable
 ADD_EXECUTABLE(${PROJECT_NAME}
     ${main_DIR}
-    ${vn_DIR}
     ${fsm_DIR}
     ${AgentSrc} 
     src/basic_function.cpp
@@ -136,6 +153,7 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC
     RobotInterface
     yaml-cpp
     lcm
+    libserial_shared
     pnd pndc++
     ${SIM_DEPENDENCIES}
 )

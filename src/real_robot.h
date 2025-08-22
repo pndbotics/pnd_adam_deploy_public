@@ -1,9 +1,9 @@
 #ifndef REAL_ROBOT_HPP_
 #define REAL_ROBOT_HPP_
 
+#include "imu.hpp"
 #include "joint_interface.h"
 #include "robot_common.hpp"
-#include "vnIMU.h"
 
 class RealRobot : public RobotCommon {
  public:
@@ -18,7 +18,7 @@ class RealRobot : public RobotCommon {
 
  private:
   std::unique_ptr<JointInterface> joint_interface_;
-  vnIMU imu_;
+  ImuHandler imu_;
 
   Eigen::VectorXd joint_Kp_s = Eigen::VectorXd::Zero(kRobotDof);
   Eigen::VectorXd joint_Kd_s = Eigen::VectorXd::Zero(kRobotDof);

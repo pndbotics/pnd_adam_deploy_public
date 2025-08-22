@@ -16,16 +16,16 @@
 # state_name: "StateRosDemo"
 
 ####### lcm demo #######
+# model_pb: "python_scripts/source/example_obs91.pt"
+# obs_num: 91
+# joint_config_path: "robot_interface/config/joint_pd_config.json"
+# state_name: "StateLcmDemo"
+
+####### pos demo #######
 model_pb: "python_scripts/source/example_obs91.pt"
 obs_num: 91
 joint_config_path: "robot_interface/config/joint_pd_config.json"
-state_name: "StateLcmDemo"
-
-####### pos demo #######
-#model_pb: "python_scripts/source/example_obs91.pt"
-#obs_num: 91
-#joint_config_path: "robot_interface/config/joint_pd_config.json"
-#state_name: "StatePosDemo"
+state_name: "StatePosDemo"
 
 ####### ankle demo #######
 # model_pb: "python_scripts/source/example_obs91.pt"
