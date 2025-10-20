@@ -16,7 +16,7 @@ FIND_PACKAGE(Threads REQUIRED)
 FIND_PACKAGE(Torch REQUIRED)
 FIND_PACKAGE(lcm REQUIRED)
 
-set(adam_type CACHE STRING "adam type: adam_lite or adam_standard or adam_inspire")
+set(adam_type CACHE STRING "adam type: adam_lite or adam_standard or adam_inspire or adam_sp_pro")
 set(adam_env_type CACHE STRING "adam env type: real or mujoco or webots")
 set(middleware_type CACHE STRING "middleware_type: ros2 or null")
 
@@ -30,8 +30,10 @@ elseif(${adam_type} STREQUAL "adam_standard")
     ADD_DEFINITIONS(-DADAM_STANDARD)
 elseif(${adam_type} STREQUAL "adam_inspire")
     ADD_DEFINITIONS(-DADAM_INSPIRE)
+elseif(${adam_type} STREQUAL "adam_sp_pro")
+    ADD_DEFINITIONS(-DADAM_SP_PRO)
 else()
-    MESSAGE(FATAL_ERROR "adam_type must be adam_lite or adam_standard or adam_inspire")
+    MESSAGE(FATAL_ERROR "adam_type must be adam_lite or adam_standard or adam_inspire or adam_sp_pro")
 endif()
 
 if(${adam_env_type} STREQUAL "real")
@@ -186,15 +188,11 @@ if (${adam_env_type} STREQUAL "webots")
         copy ${CMAKE_SOURCE_DIR}/src/pnd-cpp-sdk/pnd/lib/linux_x86_64/libpnd.so.1.5.1 ${CMAKE_SOURCE_DIR}/webots/${webots_ctrl_path}/controllers/${PROJECT_NAME}/libpnd.so.1.5.1)
 elseif(${adam_env_type} STREQUAL "mujoco")
     ADD_CUSTOM_COMMAND(TARGET  ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E 
-    copy_directory ${PROJECT_SOURCE_DIR}/python_scripts/source ${CMAKE_SOURCE_DIR}/build_adam_lite_mujoco/python_scripts/source)
+        copy_directory ${PROJECT_SOURCE_DIR}/python_scripts/source ${CMAKE_BINARY_DIR}/python_scripts/source)
     ADD_CUSTOM_COMMAND(TARGET  ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E 
-    copy_directory ${PROJECT_SOURCE_DIR}/robot_interface/config ${CMAKE_SOURCE_DIR}/build_adam_lite_mujoco/robot_interface/config)
+        copy_directory ${PROJECT_SOURCE_DIR}/robot_interface/config ${CMAKE_BINARY_DIR}/robot_interface/config)
     ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E
-    copy ${CMAKE_SOURCE_DIR}/config.yaml ${CMAKE_SOURCE_DIR}/build_adam_lite_mujoco/config.yaml)
-    ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E
-    copy ${CMAKE_SOURCE_DIR}/config.yaml ${CMAKE_SOURCE_DIR}/build_adam_lite_mujoco/config.yaml)
-    ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E
-    copy ${CMAKE_SOURCE_DIR}/src/pnd-cpp-sdk/pnd/lib/linux_x86_64/libpnd.so.1.5.1 ${CMAKE_SOURCE_DIR}/build_adam_lite_mujoco/libpnd.so.1.5.1)
+        copy ${CMAKE_SOURCE_DIR}/src/pnd-cpp-sdk/pnd/lib/linux_x86_64/libpnd.so.1.5.1 ${CMAKE_BINARY_DIR}/libpnd.so.1.5.1)
 else()
     INSTALL(TARGETS ${PROJECT_NAME}
             RUNTIME DESTINATION bin)

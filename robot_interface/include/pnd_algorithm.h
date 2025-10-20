@@ -13,6 +13,8 @@ constexpr int kRobotDof = 25;  // robot dof number
 constexpr int kRobotDof = 31;
 #elif defined(ADAM_INSPIRE)
 constexpr int kRobotDof = 29;
+#elif defined(ADAM_SP_PRO)
+constexpr int kRobotDof = 31;
 #endif
 
 constexpr int kObsDof = 23;                           // observation dof number

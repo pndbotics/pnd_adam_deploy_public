@@ -10,6 +10,9 @@
 
 int main(int argc, char **argv) {
   std::cout << "PND Adam Deploy Public Example" << std::endl;
+  // load config
+  PConfig::getInst().loadConfig();
+
 #ifdef MUJOCO
   MujocoSim mujocoSim;
   std::thread mujocoThread(&MujocoSim::simLoop, &mujocoSim);
@@ -17,9 +20,6 @@ int main(int argc, char **argv) {
 #endif
   at::set_num_threads(1);          // Disables the intraop thread pool.
   at::set_num_interop_threads(1);  // Disables the interop thread pool.
-
-  // load config
-  PConfig::getInst().loadConfig();
 
   // robot_data init
   RobotData robot_data;

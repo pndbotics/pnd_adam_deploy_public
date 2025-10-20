@@ -57,16 +57,15 @@ class PConfig {
   PConfig& operator=(PConfig const&) = delete;
 
   void loadConfig() {
-    YAML::Node config;
     try {
-      config = YAML::LoadFile("config.yaml");
+      config_ = YAML::LoadFile("config.yaml");
     } catch (const YAML::BadFile& e) {
-      config = YAML::LoadFile("../config.yaml");
+      config_ = YAML::LoadFile("../config.yaml");
     }
-    model_pb_ = config["model_pb"].as<std::string>();
-    obs_num_ = config["obs_num"].as<int>();
-    state_name_ = config["state_name"].as<std::string>();
-    joint_config_path_ = config["joint_config_path"].as<std::string>();
+    model_pb_ = config_["model_pb"].as<std::string>();
+    obs_num_ = config_["obs_num"].as<int>();
+    state_name_ = config_["state_name"].as<std::string>();
+    joint_config_path_ = config_["joint_config_path"].as<std::string>();
     validateFilePath(model_pb_);
     validateFilePath(joint_config_path_);
 
@@ -97,7 +96,7 @@ class PConfig {
           std::cout << "WARNING: joint" << item.key() << " motor_rotor_abs_pos not set in config file." << std::endl;
           pcfg_[idx].motor_rotor_abs_pos = 0;
         }
-       } else {
+      } else {
         std::cout << "ERROR: joint " << item.key() << " abs not found" << std::endl;
       }
     }
@@ -217,9 +216,14 @@ class PConfig {
     return joint_ids;
   }
 
-  // for demo_run
-  auto jointPosMotion() const { return joint_pos_motion_; }
-  // for demo_run end
+  const YAML::Node config() const {
+    if (config_[state_name_]) {
+      return config_[state_name_];
+    } else {
+      std::cout << "ERROR: config for state " << state_name_ << " not found" << std::endl;
+      return YAML::Node();
+    }
+  }
 
  private:
   void addCfg(std::string ip, std::string name, int joint_dir, double joint_gear_ratio, double c_t_scale,
@@ -247,12 +251,16 @@ class PConfig {
     addCfg("10.10.10.90", "waistRoll",            1, 51,  0.074,  0.0,    0.0,   30.1, 30,  1, 0, 1);
     addCfg("10.10.10.91", "waistPitch",          -1, 51,  0.074,  0.0,    0.0,   30.1, 30,  1, 0, 1);
     addCfg("10.10.10.92", "waistYaw",            -1, 51,  0.074,  0.0,    0.0,   30.1, 30,  1, 0, 1);
+#if defined(ADAM_SP_PRO)
+    addCfg("10.10.10.93", "neckYaw",             -1, 51,  0.063,  0.0,    0.0,   19.8, 6,   1, 0, 1);
+    addCfg("10.10.10.94", "neckPitch",           -1, 51,  0.063,  0.0,    0.0,   19.8, 6,   1, 0, 1);
+#endif
     addCfg("10.10.10.10", "shoulderPitch_Left",  -1, 51, 0.0592,  0.0,    0.0,   8.25, 30,  1, 0, 1);
     addCfg("10.10.10.11", "shoulderRoll_Left",    1, 51, 0.0592,  0.0,    0.0,   8.25, 30,  1, 0, 1);
     addCfg("10.10.10.12", "shoulderYaw_Left",     1, 51,  0.063,  0.0,    0.0,   19.8, 6,   1, 0, 1);
     addCfg("10.10.10.13", "elbow_Left",          -1, 51,  0.063, -0.3,   -0.3,   19.8, 6,   1, 0, 1);
     addCfg("10.10.10.14", "wristYaw_Left",        1, 51,  0.063,  0.0,    0.0,   19.8, 4,   1, 0, 1);
-#if defined(ADAM_STANDARD) || defined(ADAM_INSPIRE)
+#if defined(ADAM_STANDARD) || defined(ADAM_INSPIRE) || defined(ADAM_SP_PRO)
     addCfg("10.10.10.15", "wristPitch_Left",     -1, 51,  0.063,  0.0,    0.0,   19.8, 4,   1, 0, 1);
     addCfg("10.10.10.16", "wristRoll_Left",       1, 51,  0.063,  0.0,    0.0,   19.8, 4,   1, 0, 1);
 #endif
@@ -264,7 +272,7 @@ class PConfig {
     addCfg("10.10.10.32", "shoulderYaw_Right",    1, 51,  0.063,  0.0,    0.0,   19.8, 6,   1, 0, 1);
     addCfg("10.10.10.33", "elbow_Right",          1, 51,  0.063, -0.3,   -0.3,   19.8, 6,   1, 0, 1);
     addCfg("10.10.10.34", "wristYaw_Right",       1, 51,  0.063,  0.0,    0.0,   19.8, 4,   1, 0, 1);
-#if defined(ADAM_STANDARD) || defined(ADAM_INSPIRE)
+#if defined(ADAM_STANDARD) || defined(ADAM_INSPIRE) || defined(ADAM_SP_PRO)
     addCfg("10.10.10.35", "wristPitch_Right",     1, 51,  0.063,  0.0,    0.0,   19.8, 4,   1, 0, 1);
     addCfg("10.10.10.36", "wristRoll_Right",     -1, 51,  0.063,  0.0,    0.0,   19.8, 4,   1, 0, 1);
 #endif
@@ -294,81 +302,20 @@ class PConfig {
     }
 
     std::vector<std::string> ankle_names = {
-      "anklePitch_Right", "ankleRoll_Right", "anklePitch_Left", "ankleRoll_Left",
+        "anklePitch_Right",
+        "ankleRoll_Right",
+        "anklePitch_Left",
+        "ankleRoll_Left",
     };
     auto ankle_idx = jointIdFromNames(ankle_names);
     for (auto& idx : ankle_idx) {
       kd_scale_[idx] = c_t_scale_[idx] * joint_gear_ratio_[idx] * joint_gear_ratio_[idx] / (2 * M_PI);
     }
-
-    // for demo_run
-    for (int i = 0; i < 4; ++i) {
-      joint_pos_motion_.push_back(Eigen::VectorXd::Zero(kRobotDof));
-    }
-#ifdef ADAM_LITE
-    joint_pos_motion_[0] << -0.41, -0.04, -0.23, 0.81, -0.47, 0.0,  //
-        -0.41, 0.04, 0.23, 0.81, -0.47, 0.0,                        //
-        0.0, 0.0, 0.0,                                              //
-        0.0, 0.0, 0.0, -0.3, 0.0, 0.0, -0.0, 0.0, -0.3, 0.0;
-    joint_pos_motion_[1] << -0.66, -0.11, -0.35, 0.68, -0.11, 0.0,  //
-        -0.02, -0.003, 0.015, 0.68, -0.66, 0.0,                     //
-        0.0, 0.0, 0.0,                                              //
-        0.7, 0.3, 0.0, -0.7, 0.0, -0.7, -0.3, 0.0, -0.7, 0.0;
-    joint_pos_motion_[2] << -0.02, 0.003, -0.015, 0.68, -0.66, -0.0,  //
-        -0.66, 0.11, 0.35, 0.68, -0.11, -0.0,                         //
-        0.0, 0.0, 0.0,                                                //
-        -0.7, 0.3, 0.0, -0.7, 0.0, 0.7, -0.3, 0.0, -0.7, 0.0;
-    joint_pos_motion_[3] << -0.41, -0.04, -0.23, 0.81, -0.47, 0.0,  //
-        -0.41, 0.04, 0.23, 0.81, -0.47, 0.0,                        //
-        0.0, 0.0, 0.0,                                              //
-        0.0, 0.0, 0.0, -0.3, 0.0, 0.0, -0.0, 0.0, -0.3, 0.0;
-#elif defined(ADAM_STANDARD)
-    joint_pos_motion_[0] << -0.41, -0.04, -0.23, 0.81, -0.47, 0.0,  //
-        -0.41, 0.04, 0.23, 0.81, -0.47, 0.0,                        //
-        0.0, 0.0, 0.0,                                              //
-        0.0, 0.0, 0.0, -0.3, 0.0, 0.0, 0.0, 0.0,                    //
-        0.0, -0.0, 0.0, -0.3, 0.0, 0.0, 0.0, 0.0;                   //
-    joint_pos_motion_[1] << -0.66, -0.11, -0.35, 0.68, -0.11, 0.0,  //
-        -0.02, -0.003, 0.015, 0.68, -0.66, 0.0,                     //
-        0.0, 0.0, 0.0,                                              //
-        0.7, 0.3, 0.0, -0.7, 0.4, 0.4, 0.4, 0.4,                    //
-        -0.7, -0.3, 0.0, -0.7, 0.4, 0.4, 0.4, 0.4;
-    joint_pos_motion_[2] << -0.02, 0.003, -0.015, 0.68, -0.66, -0.0,  //
-        -0.66, 0.11, 0.35, 0.68, -0.11, -0.0,                         //
-        0.0, 0.0, 0.0,                                                //
-        -0.7, 0.3, 0.0, -0.7, -0.4, -0.4, -0.4, -0.4,                 //
-        0.7, -0.3, 0.0, -0.7, -0.4, -0.4, -0.4, -0.4;
-    joint_pos_motion_[3] << -0.41, -0.04, -0.23, 0.81, -0.47, 0.0,  //
-        -0.41, 0.04, 0.23, 0.81, -0.47, 0.0,                        //
-        0.0, 0.0, 0.0,                                              //
-        0.0, 0.0, 0.0, -0.3, 0.0, 0.0, 0.0, 0.0,                    //
-        0.0, -0.0, 0.0, -0.3, 0.0, 0.0, 0.0, 0.0;
-#elif defined(ADAM_INSPIRE)
-    joint_pos_motion_[0] << -0.41, -0.04, -0.23, 0.81, -0.47, 0.0,  //
-        -0.41, 0.04, 0.23, 0.81, -0.47, 0.0,                        //
-        0.0, 0.0, 0.0,                                              //
-        0.0, 0.0, 0.0, -0.3, 0.0, 0.0, 0.0,                         //
-        0.0, -0.0, 0.0, -0.3, 0.0, 0.0, 0.0;                        //
-    joint_pos_motion_[1] << -0.66, -0.11, -0.35, 0.68, -0.11, 0.0,  //
-        -0.02, -0.003, 0.015, 0.68, -0.66, 0.0,                     //
-        0.0, 0.0, 0.0,                                              //
-        0.7, 0.3, 0.0, -0.7, 0.4, 0.4, 0.4,                         //
-        -0.7, -0.3, 0.0, -0.7, 0.4, 0.4, 0.4;
-    joint_pos_motion_[2] << -0.02, 0.003, -0.015, 0.68, -0.66, -0.0,  //
-        -0.66, 0.11, 0.35, 0.68, -0.11, -0.0,                         //
-        0.0, 0.0, 0.0,                                                //
-        -0.7, 0.3, 0.0, -0.7, -0.4, -0.4, -0.4,                       //
-        0.7, -0.3, 0.0, -0.7, -0.4, -0.4, -0.4;
-    joint_pos_motion_[3] << -0.41, -0.04, -0.23, 0.81, -0.47, 0.0,  //
-        -0.41, 0.04, 0.23, 0.81, -0.47, 0.0,                        //
-        0.0, 0.0, 0.0,                                              //
-        0.0, 0.0, 0.0, -0.3, 0.0, 0.0, 0.0,                         //
-        0.0, -0.0, 0.0, -0.3, 0.0, 0.0, 0.0;
-#endif
-    // for demo_run end
   };
 
  private:
+  YAML::Node config_;
+
   std::string model_pb_;
   int obs_num_;
   std::string state_name_;
@@ -382,10 +329,6 @@ class PConfig {
   Eigen::VectorXi joint_dir_;
   Eigen::VectorXd joint_gear_ratio_;
   Eigen::VectorXd c_t_scale_;
-
-  // for demo_run
-  std::vector<Eigen::VectorXd> joint_pos_motion_;
-  // for demo_run end
 };
 
 #endif

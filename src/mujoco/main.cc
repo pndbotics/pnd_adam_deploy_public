@@ -420,7 +420,11 @@ int MujocoSim::simLoop()
       std::make_unique<mj::GlfwAdapter>(),
       &cam, &opt, &pert, /* is_passive = */ false);
 
+#ifdef ADAM_LITE
   std::string scene_path = "../mujoco/model/adam_lite/sence.xml";
+#elif defined(ADAM_SP_PRO)
+  std::string scene_path = "../mujoco/model/adam_sp_pro/scene_adam_sp_pro.xml";
+#endif
   const char *filename = nullptr;
   if(!scene_path.empty()){
     std::cout << "found path" << std::endl;

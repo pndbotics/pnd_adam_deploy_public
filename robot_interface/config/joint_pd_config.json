@@ -89,6 +89,18 @@
             "Kd": 4.1
         }
     },
+    "neckYaw": {
+        "control_config": {
+            "Kp": 9,
+            "Kd": 0.9
+        }
+    },
+    "neckPitch": {
+        "control_config": {
+            "Kp": 9,
+            "Kd": 0.9
+        }
+    },
     "shoulderPitch_Left": {
         "control_config": {
             "Kp": 18.0,

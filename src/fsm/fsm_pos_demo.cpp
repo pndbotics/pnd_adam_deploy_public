@@ -3,7 +3,13 @@
 #include "pconfig.hpp"
 #include "pdata_handler.hpp"
 
-StatePosDemo::StatePosDemo(RobotData *robot_data) : FSMState(robot_data) { current_state_name_ = FSMStateName::MLP; }
+StatePosDemo::StatePosDemo(RobotData* robot_data) : FSMState(robot_data) {
+  current_state_name_ = FSMStateName::MLP;
+  for (int i = 0; i < 4; ++i) {
+    joint_pos_motion_.push_back(Eigen::VectorXd::Zero(kRobotDof));
+  }
+  loadCfg();
+}
 
 StatePosDemo::~StatePosDemo() {}
 
@@ -20,16 +26,14 @@ void StatePosDemo::run() {
 
   // parameters for demo motion
   double time_interval = 2.0;
-  auto joint_pos_motion = PConfig::getInst().jointPosMotion();
-  int motion_num = joint_pos_motion.size();
-  // std::cout << "motion_num:" << motion_num << std::endl;
+  int motion_num = joint_pos_motion_.size();
 
   if (timer_ < (motion_num - 1) * time_interval) {
     int i = (int)(timer_ / time_interval);
-    fifthPoly(joint_pos_motion[i], zero, zero, joint_pos_motion[i + 1], zero, zero, time_interval,
+    fifthPoly(joint_pos_motion_[i], zero, zero, joint_pos_motion_[i + 1], zero, zero, time_interval,
               timer_ - i * time_interval, joint_pos, joint_vel, joint_acc);
   } else {
-    joint_pos = joint_pos_motion[motion_num - 1];
+    joint_pos = joint_pos_motion_[motion_num - 1];
     joint_vel.setZero();
   }
 
@@ -55,3 +59,33 @@ FSMStateName StatePosDemo::checkTransition() {
 }
 
 void StatePosDemo::onExit() {}
+
+void StatePosDemo::loadCfg() {
+  auto config = PConfig::getInst().config();
+  auto joint_names = PConfig::getInst().jointNames();
+  assert(("Error: joint_names size mismatch", joint_names.size() == joint_pos_motion_[0].size()));
+  auto motion = config["motion"];
+  if (!motion) {
+    std::cout << "ERROR: no motion data for StatePosDemo" << std::endl;
+    exit(-1);
+  }
+  int joint_idx = 0;
+  for (auto& joint_name : joint_names) {
+    if (motion[joint_name]) {
+      auto pos_list = motion[joint_name].as<std::vector<double>>();
+      for (size_t i = 0; i < joint_pos_motion_.size(); ++i) {
+        joint_pos_motion_[i][joint_idx] = pos_list[i];
+      }
+    } else {
+      std::cout << "ERROR: no motion data for " << joint_name << std::endl;
+    }
+    ++joint_idx;
+  }
+
+  // for (size_t i = 0; i < joint_pos_motion_.size(); ++i) {
+  //   for (size_t j = 0; j < joint_pos_motion_[i].size(); ++j) {
+  //     std::cout << joint_pos_motion_[i][j] << " ";
+  //   }
+  //   std::cout << std::endl;
+  // }
+};
