@@ -16,7 +16,7 @@ FIND_PACKAGE(Threads REQUIRED)
 FIND_PACKAGE(Torch REQUIRED)
 FIND_PACKAGE(lcm REQUIRED)
 
-set(adam_type CACHE STRING "adam type: adam_lite or adam_standard or adam_inspire or adam_sp_pro")
+set(adam_type CACHE STRING "adam type: adam_lite or adam_standard or adam_inspire or adam_sp or adam_pro")
 set(adam_env_type CACHE STRING "adam env type: real or mujoco or webots")
 set(middleware_type CACHE STRING "middleware_type: ros2 or null")
 
@@ -30,10 +30,12 @@ elseif(${adam_type} STREQUAL "adam_standard")
     ADD_DEFINITIONS(-DADAM_STANDARD)
 elseif(${adam_type} STREQUAL "adam_inspire")
     ADD_DEFINITIONS(-DADAM_INSPIRE)
-elseif(${adam_type} STREQUAL "adam_sp_pro")
-    ADD_DEFINITIONS(-DADAM_SP_PRO)
+elseif(${adam_type} STREQUAL "adam_sp")
+    ADD_DEFINITIONS(-DADAM_SP)
+elseif(${adam_type} STREQUAL "adam_pro")
+    ADD_DEFINITIONS(-DADAM_PRO)
 else()
-    MESSAGE(FATAL_ERROR "adam_type must be adam_lite or adam_standard or adam_inspire or adam_sp_pro")
+    MESSAGE(FATAL_ERROR "adam_type must be adam_lite or adam_standard or adam_inspire or adam_sp or adam_pro")
 endif()
 
 if(${adam_env_type} STREQUAL "real")
@@ -128,9 +130,9 @@ else()
     set(AgentSrc
         ${PROJECT_SOURCE_DIR}/src/real_robot.cpp 
         third_party/vnIMU/src/vnIMU.cpp
-        src/imu.cpp
-        src/imu_check.cpp
     )
+    AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/imu AgentSrc)
+    AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/src/hands AgentSrc)
     AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/third_party/vnIMU/src/vn AgentSrc)
     AUX_SOURCE_DIRECTORY(${PROJECT_SOURCE_DIR}/third_party/hi14r5 AgentSrc)
 endif()

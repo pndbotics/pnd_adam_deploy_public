@@ -6,7 +6,10 @@
 #include "pconfig.hpp"
 #include "putil.h"
 
-RealRobot::RealRobot() { joint_interface_ = std::make_unique<JointInterface>(); }
+RealRobot::RealRobot() {
+  joint_interface_ = std::make_unique<JointInterface>();
+  hands_position = std::vector<int>(kHandsLinearActuatorDof, 0);
+}
 
 RealRobot::~RealRobot() { imu_.close(); }
 
@@ -134,10 +137,18 @@ AdamStatusCode RealRobot::init() {
               PConfig::getInst().curTorScale().array() / PConfig::getInst().kdScale().array())
                  .matrix();
   kp_mul_kd_ = joint_Kp_.array() * joint_Kd_.array();
+
+  if (PConfig::getInst().handType() == HandType::PND_HAND) {
+    hands_ctrl_ = getPndHandInterface({1800, 1800, 1800, 1800, 1600, 0});
+    if (hands_ctrl_ == nullptr) {
+      std::cout << "ERROR: PndHandInterface init failed" << std::endl;
+      return AdamStatusCode::AdamStatusFailure;
+    }
+  }
   return AdamStatusCode::AdamStatusSuccess;
 }
 
-AdamStatusCode RealRobot::getState(double t, RobotData &robot_data) {
+AdamStatusCode RealRobot::getState(double t, RobotData& robot_data) {
   robot_data.imu_data_ = imu_.getImuData();
   joint_interface_->getState(joint_pos_, joint_vel_, joint_tau_);
   robot_data.error_state_ = joint_interface_->joint_error_;
@@ -153,7 +164,7 @@ AdamStatusCode RealRobot::getState(double t, RobotData &robot_data) {
   return AdamStatusCode::AdamStatusSuccess;
 }
 
-AdamStatusCode RealRobot::setCommand(RobotData &robot_data) {
+AdamStatusCode RealRobot::setCommand(RobotData& robot_data) {
   // S2P
   PndS2P(robot_data, PConfig::getInst().kdScale(), joint_Kp_, joint_Kd_, joint_Kp_s, joint_Kd_s, ankle_ids_);
 #if defined(ADAM_STANDARD) || defined(ADAM_INSPIRE)
@@ -182,6 +193,25 @@ AdamStatusCode RealRobot::setCommand(RobotData &robot_data) {
   joint_interface_->setCommand(robot_data.q_d_.tail(kRobotDof), robot_data.q_dot_d_.tail(kRobotDof),
                                robot_data.tau_d_.tail(kRobotDof));
 
+  // hands control
+  if (PConfig::getInst().handType() == HandType::PND_HAND) {
+    static int freq_ = 0;
+    if (freq_ % 8 == 0) {
+      for (int i = 0; i < robot_data.hands_la_q_d_.size(); i++) {
+        hands_position[i] = static_cast<int>(robot_data.hands_la_q_d_(i));
+      }
+      for (int i = 0; i < robot_data.hands_la_q_d_.size(); i++) {
+        hands_position[i] = (1000 - hands_position[i]) * 2;
+        if (hands_position[i] >= 1800) {
+          hands_position[i] = 1800;
+        }
+      }
+      hands_ctrl_->setPosition(hands_position);
+      freq_ = 0;
+    }
+    freq_++;
+  }
+
   return AdamStatusCode::AdamStatusSuccess;
 }
 
@@ -190,7 +220,7 @@ AdamStatusCode RealRobot::disableAllJoints() {
   return AdamStatusCode::AdamStatusSuccess;
 }
 
-AdamStatusCode RealRobot::readAbsEncoder(Eigen::VectorXd &init_pos, Eigen::VectorXd &motor_enc_init_pos) {
+AdamStatusCode RealRobot::readAbsEncoder(Eigen::VectorXd& init_pos, Eigen::VectorXd& motor_enc_init_pos) {
   std::ifstream abs_file("python_scripts/source/abs.json");
   nlohmann::json data;
   if (!abs_file.is_open()) {
@@ -199,7 +229,7 @@ AdamStatusCode RealRobot::readAbsEncoder(Eigen::VectorXd &init_pos, Eigen::Vecto
   }
   try {
     data = nlohmann::json::parse(abs_file);
-  } catch (std::exception &e) {
+  } catch (std::exception& e) {
     std::cout << "abs.json parse error" << std::endl;
     std::cout << e.what() << std::endl;
   }
@@ -208,7 +238,7 @@ AdamStatusCode RealRobot::readAbsEncoder(Eigen::VectorXd &init_pos, Eigen::Vecto
   std::vector<std::string> keys = PConfig::getInst().ipList();
   incrementLastField(keys);
 
-  for (auto &item : data.items()) {
+  for (auto& item : data.items()) {
     if (!item.value().contains("radian") || !item.value().contains("motor_rotor_abs_pos")) {
       std::cout << item.key() << " not used" << std::endl;
       continue;

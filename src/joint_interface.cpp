@@ -39,8 +39,9 @@ void JointInterface::init(Eigen::VectorXd absolute_pos, Eigen::VectorXd Kp, Eige
     control_command_[i].torque_ff = 0.0;
   }
 
+  auto ip_list = PConfig::getInst().ipList();
   for (int i = 0; i < kRobotDof; i++) {
-    joint_ip_index_.insert(std::pair<std::string, int>(PConfig::getInst().ipList()[i], i));
+    joint_ip_index_.insert(std::pair<std::string, int>(ip_list[i], i));
   }
 
   for (int i = 0; i < kRobotDof; i++) {

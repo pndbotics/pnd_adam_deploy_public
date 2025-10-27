@@ -10,7 +10,7 @@
 
 torch::jit::script::Module mlp_model;
 
-FSMState *FSMInit(RobotData &robot_data) {
+FSMState* FSMInit(RobotData& robot_data) {
   JsHum::getInst().init();
   mlp_model = torch::jit::load(PConfig::getInst().modelPb(), torch::kCPU);
 
@@ -25,7 +25,7 @@ FSMState *FSMInit(RobotData &robot_data) {
   }
   std::cout << "Warm up ready!" << std::endl;
 
-  FSMState *state_mlp;
+  FSMState* state_mlp;
   state_mlp = FSMFactory::createState(PConfig::getInst().stateName(), &robot_data);
   if (state_mlp == nullptr) {
     std::cout << "state not found" << std::endl;
@@ -35,11 +35,12 @@ FSMState *FSMInit(RobotData &robot_data) {
   return state_mlp;
 }
 
-StateZero::StateZero(RobotData *robot_data) : FSMState(robot_data) { current_state_name_ = FSMStateName::ZERO; }
+StateZero::StateZero(RobotData* robot_data) : FSMState(robot_data) { current_state_name_ = FSMStateName::ZERO; }
 
 void StateZero::onEnter() {
   timer_ = 0.;
   init_joint_pos = robot_data_->q_a_.tail(kRobotDof);
+  robot_data_->hands_q_d_.setZero();
 }
 
 void StateZero::run() {
@@ -87,7 +88,7 @@ FSMStateName StateZero::checkTransition() {
 
 void StateZero::onExit() { zero_finish_flag = false; }
 
-StateStop::StateStop(RobotData *robot_data) : FSMState(robot_data) { current_state_name_ = FSMStateName::STOP; }
+StateStop::StateStop(RobotData* robot_data) : FSMState(robot_data) { current_state_name_ = FSMStateName::STOP; }
 
 void StateStop::onEnter() {
   timer_ = 0.;

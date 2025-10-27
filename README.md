@@ -1,6 +1,16 @@
 
 # 🛠️PND Adam Deploy SDK
 
+## Supported Robot Models
+
+| Robot Model   | MuJoCo | Real Robot | Description                     |
+| ------------- | ------ | ---------- | ------------------------------- |
+| Adam Lite     | ✅      | ✅          |                                 |
+| Adam Standard | ❌      | ✅          |                                 |
+| Adam Inspire  | ❌      | ✅          | Deprecated. Use AdamSP instead. |
+| Adam SP       | ❌      | ✅          |                                 |
+| Adam Pro      | ✅      | ✅          |                                 |
+
 There are two ways to use PND Adam Deploy SDK: Build from source or use the docker.
 
 ## ⚓Use the docker

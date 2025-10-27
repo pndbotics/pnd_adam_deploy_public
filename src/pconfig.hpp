@@ -9,6 +9,7 @@
 
 #include "nlohmann/json/json.hpp"
 #include "pnd_algorithm.h"
+#include "robot.hpp"
 #include "yaml-cpp/yaml.h"
 
 struct PCfg_ {
@@ -56,7 +57,8 @@ class PConfig {
   PConfig(PConfig const&) = delete;
   PConfig& operator=(PConfig const&) = delete;
 
-  void loadConfig() {
+  bool loadConfig() {
+    bool res = true;
     try {
       config_ = YAML::LoadFile("config.yaml");
     } catch (const YAML::BadFile& e) {
@@ -100,6 +102,17 @@ class PConfig {
         std::cout << "ERROR: joint " << item.key() << " abs not found" << std::endl;
       }
     }
+
+#if defined(ADAM_PRO) || defined(ADAM_SP)
+    robot_ = std::make_unique<AdamPro>();
+#else
+    robot_ = std::make_unique<AdamLite>();
+#endif
+    if (robot_->fingerJointNames().size() != kHandsDof) {
+      std::cout << "ERROR: finger_joint_names size mismatch" << std::endl;
+      res = false;
+    }
+    return res;
   }
 
   void validateFilePath(const std::string& file_path) {
@@ -225,6 +238,10 @@ class PConfig {
     }
   }
 
+  const std::vector<std::string>& fingerJointNames() const { return robot_->fingerJointNames(); }
+  const std::vector<std::string>& linearActuatorNames() const { return robot_->linearActuatorNames(); }
+  const HandType handType() const { return robot_->handType(); }
+
  private:
   void addCfg(std::string ip, std::string name, int joint_dir, double joint_gear_ratio, double c_t_scale,
               double zero_pos, double default_dof_pos, double kd_scale, double joint_max_current,
@@ -251,16 +268,16 @@ class PConfig {
     addCfg("10.10.10.90", "waistRoll",            1, 51,  0.074,  0.0,    0.0,   30.1, 30,  1, 0, 1);
     addCfg("10.10.10.91", "waistPitch",          -1, 51,  0.074,  0.0,    0.0,   30.1, 30,  1, 0, 1);
     addCfg("10.10.10.92", "waistYaw",            -1, 51,  0.074,  0.0,    0.0,   30.1, 30,  1, 0, 1);
-#if defined(ADAM_SP_PRO)
+#if defined(ADAM_PRO)
     addCfg("10.10.10.93", "neckYaw",             -1, 51,  0.063,  0.0,    0.0,   19.8, 6,   1, 0, 1);
     addCfg("10.10.10.94", "neckPitch",           -1, 51,  0.063,  0.0,    0.0,   19.8, 6,   1, 0, 1);
 #endif
     addCfg("10.10.10.10", "shoulderPitch_Left",  -1, 51, 0.0592,  0.0,    0.0,   8.25, 30,  1, 0, 1);
-    addCfg("10.10.10.11", "shoulderRoll_Left",    1, 51, 0.0592,  0.0,    0.0,   8.25, 30,  1, 0, 1);
+    addCfg("10.10.10.11", "shoulderRoll_Left",    1, 51, 0.0592,  0.1,    0.0,   8.25, 30,  1, 0, 1);
     addCfg("10.10.10.12", "shoulderYaw_Left",     1, 51,  0.063,  0.0,    0.0,   19.8, 6,   1, 0, 1);
     addCfg("10.10.10.13", "elbow_Left",          -1, 51,  0.063, -0.3,   -0.3,   19.8, 6,   1, 0, 1);
     addCfg("10.10.10.14", "wristYaw_Left",        1, 51,  0.063,  0.0,    0.0,   19.8, 4,   1, 0, 1);
-#if defined(ADAM_STANDARD) || defined(ADAM_INSPIRE) || defined(ADAM_SP_PRO)
+#if defined(ADAM_STANDARD) || defined(ADAM_INSPIRE) || defined(ADAM_SP) || defined(ADAM_PRO)
     addCfg("10.10.10.15", "wristPitch_Left",     -1, 51,  0.063,  0.0,    0.0,   19.8, 4,   1, 0, 1);
     addCfg("10.10.10.16", "wristRoll_Left",       1, 51,  0.063,  0.0,    0.0,   19.8, 4,   1, 0, 1);
 #endif
@@ -268,11 +285,11 @@ class PConfig {
     addCfg("10.10.10.17", "gripper_Left",         1, 51,  0.063,  0.0,    0.0,   19.8, 4,   1, 0, 1);
 #endif
     addCfg("10.10.10.30", "shoulderPitch_Right",  1, 51, 0.0592,  0.0,    0.0,   8.25, 30,  1, 0, 1);
-    addCfg("10.10.10.31", "shoulderRoll_Right",   1, 51, 0.0592,  0.0,    0.0,   8.25, 30,  1, 0, 1);
+    addCfg("10.10.10.31", "shoulderRoll_Right",   1, 51, 0.0592, -0.1,    0.0,   8.25, 30,  1, 0, 1);
     addCfg("10.10.10.32", "shoulderYaw_Right",    1, 51,  0.063,  0.0,    0.0,   19.8, 6,   1, 0, 1);
     addCfg("10.10.10.33", "elbow_Right",          1, 51,  0.063, -0.3,   -0.3,   19.8, 6,   1, 0, 1);
     addCfg("10.10.10.34", "wristYaw_Right",       1, 51,  0.063,  0.0,    0.0,   19.8, 4,   1, 0, 1);
-#if defined(ADAM_STANDARD) || defined(ADAM_INSPIRE) || defined(ADAM_SP_PRO)
+#if defined(ADAM_STANDARD) || defined(ADAM_INSPIRE) || defined(ADAM_SP) || defined(ADAM_PRO)
     addCfg("10.10.10.35", "wristPitch_Right",     1, 51,  0.063,  0.0,    0.0,   19.8, 4,   1, 0, 1);
     addCfg("10.10.10.36", "wristRoll_Right",     -1, 51,  0.063,  0.0,    0.0,   19.8, 4,   1, 0, 1);
 #endif
@@ -315,6 +332,8 @@ class PConfig {
 
  private:
   YAML::Node config_;
+
+  std::unique_ptr<robot> robot_;
 
   std::string model_pb_;
   int obs_num_;

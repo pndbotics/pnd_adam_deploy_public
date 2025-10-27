@@ -13,8 +13,18 @@ constexpr int kRobotDof = 25;  // robot dof number
 constexpr int kRobotDof = 31;
 #elif defined(ADAM_INSPIRE)
 constexpr int kRobotDof = 29;
-#elif defined(ADAM_SP_PRO)
+#elif defined(ADAM_SP)
+constexpr int kRobotDof = 29;
+#elif defined(ADAM_PRO)
 constexpr int kRobotDof = 31;
+#endif
+
+#if defined(ADAM_PRO) || defined(ADAM_SP)
+constexpr int kHandsDof = 24;  // hand dof number
+constexpr int kHandsLinearActuatorDof = 12;
+#else
+constexpr int kHandsDof = 0;
+constexpr int kHandsLinearActuatorDof = 0;
 #endif
 
 constexpr int kObsDof = 23;                           // observation dof number
@@ -51,6 +61,12 @@ struct RobotData {
 
   // vector description: yaw pitch roll gyro_x gyro_y gyro_z acc_x acc_y acc_z
   Eigen::VectorXd imu_data_ = Eigen::VectorXd::Zero(9);
+
+  Eigen::VectorXd hands_q_d_ = Eigen::VectorXd::Zero(kHandsDof);      // hands desired position for mujoco
+  Eigen::VectorXd hands_q_a_ = Eigen::VectorXd::Zero(kHandsDof);      // hands actual position for mujoco
+  Eigen::VectorXd hands_q_dot_a_ = Eigen::VectorXd::Zero(kHandsDof);  // hands actual velocity for mujoco
+  Eigen::VectorXd hands_la_q_d_ =
+      Eigen::VectorXd::Zero(kHandsLinearActuatorDof);  // hands linear actuator desired position for real robot
 
   bool pos_mode_ = true;
 

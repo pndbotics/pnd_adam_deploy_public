@@ -4,7 +4,6 @@
 #include "hi14r5/hipnuc.h"
 #include "vnIMU.h"
 
-
 class Vn100Imu : public ImuInterface {
  public:
   bool initialize() override { return vn_imu_.initIMU(); }

@@ -4,7 +4,9 @@
 #include "pdata_handler.hpp"
 #include "putil.h"
 
-StateAnkleTestDemo::StateAnkleTestDemo(RobotData *robot_data) : FSMState(robot_data) { current_state_name_ = FSMStateName::MLP; }
+StateAnkleTestDemo::StateAnkleTestDemo(RobotData *robot_data) : FSMState(robot_data) {
+  current_state_name_ = FSMStateName::MLP;
+}
 
 StateAnkleTestDemo::~StateAnkleTestDemo() {}
 

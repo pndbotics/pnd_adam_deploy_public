@@ -3,10 +3,10 @@
 #include <unistd.h>
 
 #include <cstring>
-#include <imu.hpp>
 #include <iostream>
 #include <string>
 
+#include "imu/imu.hpp"
 #include "nlohmann/json/json.hpp"
 
 using json = nlohmann::json;

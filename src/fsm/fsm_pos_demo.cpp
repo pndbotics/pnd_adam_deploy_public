@@ -6,7 +6,7 @@
 StatePosDemo::StatePosDemo(RobotData* robot_data) : FSMState(robot_data) {
   current_state_name_ = FSMStateName::MLP;
   for (int i = 0; i < 4; ++i) {
-    joint_pos_motion_.push_back(Eigen::VectorXd::Zero(kRobotDof));
+    joint_pos_motion_.push_back(Eigen::VectorXd::Zero(kRobotDof + kHandsDof + kHandsLinearActuatorDof));
   }
   loadCfg();
 }
@@ -19,10 +19,10 @@ void StatePosDemo::onEnter() {
 }
 
 void StatePosDemo::run() {
-  Eigen::VectorXd zero = Eigen::VectorXd::Zero(kRobotDof);
-  Eigen::VectorXd joint_pos = PConfig::getInst().zeroPos();
-  Eigen::VectorXd joint_vel = Eigen::VectorXd::Zero(kRobotDof);
-  Eigen::VectorXd joint_acc = Eigen::VectorXd::Zero(kRobotDof);
+  Eigen::VectorXd zero = Eigen::VectorXd::Zero(kRobotDof + kHandsDof + kHandsLinearActuatorDof);
+  Eigen::VectorXd joint_pos = Eigen::VectorXd::Zero(kRobotDof + kHandsDof + kHandsLinearActuatorDof);
+  Eigen::VectorXd joint_vel = Eigen::VectorXd::Zero(kRobotDof + kHandsDof + kHandsLinearActuatorDof);
+  Eigen::VectorXd joint_acc = Eigen::VectorXd::Zero(kRobotDof + kHandsDof + kHandsLinearActuatorDof);
 
   // parameters for demo motion
   double time_interval = 2.0;
@@ -38,9 +38,11 @@ void StatePosDemo::run() {
   }
 
   // set des here
-  robot_data_->q_d_.tail(kRobotDof) = joint_pos;
-  robot_data_->q_dot_d_.tail(kRobotDof) = joint_vel;
+  robot_data_->q_d_.tail(kRobotDof) = joint_pos.head(kRobotDof);
+  robot_data_->q_dot_d_.tail(kRobotDof) = joint_vel.head(kRobotDof);
   robot_data_->tau_d_.setZero();
+  robot_data_->hands_q_d_ = joint_pos.segment(kRobotDof, kHandsDof);
+  robot_data_->hands_la_q_d_ = joint_pos.tail(kHandsLinearActuatorDof);
 
   timer_ += kDt;
 
@@ -63,6 +65,10 @@ void StatePosDemo::onExit() {}
 void StatePosDemo::loadCfg() {
   auto config = PConfig::getInst().config();
   auto joint_names = PConfig::getInst().jointNames();
+  auto hands_joint_names = PConfig::getInst().fingerJointNames();
+  auto linear_actuator_names = PConfig::getInst().linearActuatorNames();
+  joint_names.insert(joint_names.end(), hands_joint_names.begin(), hands_joint_names.end());
+  joint_names.insert(joint_names.end(), linear_actuator_names.begin(), linear_actuator_names.end());
   assert(("Error: joint_names size mismatch", joint_names.size() == joint_pos_motion_[0].size()));
   auto motion = config["motion"];
   if (!motion) {

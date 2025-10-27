@@ -416,14 +416,14 @@ int MujocoSim::simLoop()
   mjv_defaultPerturb(&pert);
 
   // simulate object encapsulates the UI
-  auto sim = std::make_unique<mj::Simulate>(
+  sim_ = std::make_unique<mj::Simulate>(
       std::make_unique<mj::GlfwAdapter>(),
       &cam, &opt, &pert, /* is_passive = */ false);
 
 #ifdef ADAM_LITE
   std::string scene_path = "../mujoco/model/adam_lite/sence.xml";
-#elif defined(ADAM_SP_PRO)
-  std::string scene_path = "../mujoco/model/adam_sp_pro/scene_adam_sp_pro.xml";
+#elif defined(ADAM_PRO)
+  std::string scene_path = "../mujoco/model/adam_pro/scene_adam_pro.xml";
 #endif
   const char *filename = nullptr;
   if(!scene_path.empty()){
@@ -434,20 +434,21 @@ int MujocoSim::simLoop()
     std::cout << "files not found" << std::endl;
   }
 
-  pthread_t pnd_thread;
-  int rc = pthread_create(&pnd_thread, NULL, PNDhread, NULL);
-  if (rc != 0)
-  {
-    std::cout << "Error:unable to create thread," << rc << std::endl;
-    exit(-1);
-  }
+  // pthread_t pnd_thread;
+  // int rc = pthread_create(&pnd_thread, NULL, PNDhread, NULL);
+  // if (rc != 0)
+  // {
+  //   std::cout << "Error:unable to create thread," << rc << std::endl;
+  //   exit(-1);
+  // }
 
   // start physics thread
-  std::thread physicsthreadhandle(&PhysicsThread, sim.get(), filename);
+  std::thread physicsthreadhandle(&PhysicsThread, sim_.get(), filename);
 
   // start simulation UI loop (blocking call)
-  sim->RenderLoop();
+  sim_->RenderLoop();
   physicsthreadhandle.join();
+  std::cout << "Mujoco simulation loop exited" << std::endl;
 
   return 0;
 }

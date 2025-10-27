@@ -13,7 +13,7 @@ class StateRosDemo : public FSMState {
   FSMStateName checkTransition() override;
   void onExit() override;
 
-  private:
+ private:
   Eigen::VectorXd mlp_out_scaled = Eigen::VectorXd::Zero(kObsDof);
   Eigen::VectorXd def_dof_pos_;
   Eigen::VectorXd zero_pos_;

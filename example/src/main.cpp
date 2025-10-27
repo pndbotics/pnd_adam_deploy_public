@@ -8,10 +8,14 @@
 #include "pdata_handler.hpp"
 #include "robot_handler.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   std::cout << "PND Adam Deploy Public Example" << std::endl;
   // load config
-  PConfig::getInst().loadConfig();
+  auto config_loaded = PConfig::getInst().loadConfig();
+  if (!config_loaded) {
+    std::cout << "Load config failed" << std::endl;
+    return -1;
+  }
 
 #ifdef MUJOCO
   MujocoSim mujocoSim;
@@ -78,6 +82,9 @@ int main(int argc, char **argv) {
     if (robot_data.error_state_) {
       framework.entryStop();
     }
+#ifdef MUJOCO
+    if (mujocoSim.exitstate() != 0) break;
+#endif
 
     sleep2time = start_time + period;
     sleep2time_spec = sleep2time.toTimeSpec();
@@ -85,6 +92,11 @@ int main(int argc, char **argv) {
   }
 
   framework.disableAllJoints();
+#ifdef MUJOCO
+  mujocoSim.stop();
+  mujocoThread.join();
+  std::cout << "Mujoco thread joined." << std::endl;
+#endif
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
   return 0;
 }

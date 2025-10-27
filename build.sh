@@ -8,9 +8,10 @@ middleware_type=$3
 if [ "$adam_type" != "adam_lite" ] && \
    [ "$adam_type" != "adam_inspire" ] && \
    [ "$adam_type" != "adam_standard" ] && \
-   [ "$adam_type" != "adam_sp_pro" ]; then
+   [ "$adam_type" != "adam_sp" ] && \
+   [ "$adam_type" != "adam_pro" ]; then
 	echo $adam_type
-    echo "adam_type mast be adam_lite|adam_inspire|adam_standard|adam_sp_pro. example: sh build.sh adam_lite real"
+    echo "adam_type mast be adam_lite|adam_inspire|adam_standard|adam_sp|adam_pro. example: sh build.sh adam_lite real"
 	exit 1
 fi
 if [ "$adam_env_type" != "real" ] && [ "$adam_env_type" != "mujoco" ] && [ "$adam_env_type" != "webots" ]; then
