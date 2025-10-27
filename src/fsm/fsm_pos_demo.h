@@ -6,11 +6,17 @@
 
 class StatePosDemo : public FSMState {
  public:
-  explicit StatePosDemo(RobotData *robot_data);
+  explicit StatePosDemo(RobotData* robot_data);
   ~StatePosDemo() override;
 
   void onEnter() override;
   void run() override;
   FSMStateName checkTransition() override;
   void onExit() override;
+
+ private:
+  void loadCfg();
+
+ private:
+  std::vector<Eigen::VectorXd> joint_pos_motion_;
 };

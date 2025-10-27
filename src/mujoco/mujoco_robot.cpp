@@ -4,17 +4,19 @@ MujocoRobotImpl::MujocoRobotImpl() : humanoid_(m, d) {}
 MujocoRobotImpl::~MujocoRobotImpl() {}
 
 AdamStatusCode MujocoRobotImpl::init() {
-  return AdamStatusCode::AdamStatusSuccess;
+  return humanoid_.init() ? AdamStatusCode::AdamStatusSuccess : AdamStatusCode::AdamStatusFailure;
 }
 AdamStatusCode MujocoRobotImpl::getState(double t, RobotData& robot_data) {
   humanoid_.readData(t, robot_state_sim_);
-  joint_pos_ = robot_state_sim_.jointPosAct;
-  joint_vel_ = robot_state_sim_.jointVelAct;
+  joint_pos_ = robot_state_sim_.jointPosAct.head(kRobotDof);
+  joint_vel_ = robot_state_sim_.jointVelAct.head(kRobotDof);
   joint_tau_ = robot_data.tau_d_.tail(kRobotDof);
   robot_data.q_a_.tail(kRobotDof) = joint_pos_;
   robot_data.q_dot_a_.tail(kRobotDof) = joint_vel_;
   robot_data.tau_a_.tail(kRobotDof) = joint_tau_;
   robot_data.imu_data_ = robot_state_sim_.imu9DAct;
+  robot_data.hands_q_a_ = robot_state_sim_.jointPosAct.tail(kHandsDof);
+  robot_data.hands_q_dot_a_ = robot_state_sim_.jointVelAct.tail(kHandsDof);
   return AdamStatusCode::AdamStatusSuccess;
 }
 
@@ -26,7 +28,7 @@ AdamStatusCode MujocoRobotImpl::setCommand(RobotData& robot_data) {
   // robot_data.pos_mode_ = false;
 
   if (robot_data.pos_mode_) {
-    humanoid_.setMotorPos(robot_data.q_d_.tail(kRobotDof), robot_data, joint_Kp_, joint_Kd_);
+    humanoid_.setMotorPos(robot_data, joint_Kp_, joint_Kd_);
   } else {
     humanoid_.setMotorTau(robot_data.tau_d_.tail(kRobotDof));
   }
@@ -34,4 +36,9 @@ AdamStatusCode MujocoRobotImpl::setCommand(RobotData& robot_data) {
   return AdamStatusCode::AdamStatusSuccess;
 }
 
+// AdamStatusCode MujocoRobotImpl::setCommand(RobotData& robot_data) {
+//   humanoid_.setMotorPos(robot_data, joint_Kp_, joint_Kd_);
+
+//   return AdamStatusCode::AdamStatusSuccess;
+// }
 AdamStatusCode MujocoRobotImpl::disableAllJoints() { return AdamStatusCode::AdamStatusSuccess; }

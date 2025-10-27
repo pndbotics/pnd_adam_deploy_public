@@ -6,10 +6,9 @@
 
 #include "pconfig.hpp"
 #include "pdata_handler.hpp"
-#include "robot_handler.h"
-
+#include "pndbotics_publisher.hpp"
 #include "rclcpp/rclcpp.hpp"
-#include "pndbotics_publisher.hpp" 
+#include "robot_handler.h"
 
 int main(int argc, char **argv) {
 #ifdef MUJOCO
@@ -17,13 +16,11 @@ int main(int argc, char **argv) {
   std::thread mujocoThread(&MujocoSim::simLoop, &mujocoSim);
   sleep(3);
 #endif
-  rclcpp::init(argc, argv); // 初始化ROS2
-    
+  rclcpp::init(argc, argv);  // 初始化ROS2
+
   // 创建ROS2节点
   auto robot_publisher = std::make_shared<RobotPublisher>();
-  std::thread ros_spin_thread([&]() {
-    rclcpp::spin(robot_publisher);
-  });
+  std::thread ros_spin_thread([&]() { rclcpp::spin(robot_publisher); });
 
   at::set_num_threads(1);          // Disables the intraop thread pool.
   at::set_num_interop_threads(1);  // Disables the interop thread pool.
@@ -63,20 +60,19 @@ int main(int argc, char **argv) {
 
     framework.getState(time_fsm, robot_data);  // get state (position, velocity, current) from robot
 
-        // 发布实际状态和IMU数据
+    // 发布实际状态和IMU数据
     robot_publisher->publish_robot_state(robot_data);
     robot_publisher->publish_imu(robot_data);
-    
+
     get_state_time = timer.currentTime() - start_time;  // get state execution time
-    if(JsHum::getInst().getStateChange() == "gotoMLP"){
+    if (JsHum::getInst().getStateChange() == "gotoMLP") {
       robot_publisher->get_latest_command(robot_data);
     }
-      // framework.setCommand(robot_data);  // send commands to joints
-    framework.runFSM(); // run fsm (The calculation time cannot exceed 1.5ms)
+    // framework.setCommand(robot_data);  // send commands to joints
+    framework.runFSM();                // run fsm (The calculation time cannot exceed 1.5ms)
     framework.setCommand(robot_data);  // send commands to joints
 
     fsm_time = timer.currentTime() - start_time - get_state_time;  // Finite state machine execution time
-
 
     cmd_time = timer.currentTime() - start_time - fsm_time - get_state_time;  // send command execution time
 
