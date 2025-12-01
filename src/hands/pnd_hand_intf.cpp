@@ -13,7 +13,7 @@
 #include "pnd_hand.h"
 #include "pnd_hand_old.h"
 
-enum class PndHandVersion { Unknown = -1, HandOld = 0, Hand_0_2_31 = 1 };
+enum class PndHandVersion { Unknown = -1, HandOld = 0, Hand_0_2_31 = 1, Hand_0_2_32 = 2 };
 
 std::vector<int> parseVersion(const std::string& versionStr) {
   std::vector<int> versionParts;
@@ -116,10 +116,12 @@ class HandInfoClient {
         auto json_response = nlohmann::json::parse(buffer);
         if (json_response.contains("result") && json_response["result"].contains("fw_version")) {
           std::string version_str = json_response["result"]["fw_version"];
-          if (isVersionLater(version_str, "0.2.31")) {
+          if (isVersionLater(version_str, "0.2.31") && isVersionLater(version_str, "0.2.32")) {
             version = PndHandVersion::Unknown;
           } else if (version_str == "0.2.31") {
             version = PndHandVersion::Hand_0_2_31;
+          } else if (version_str == "0.2.32") {
+            version = PndHandVersion::Hand_0_2_32;
           } else {
             version = PndHandVersion::HandOld;
           }
@@ -146,7 +148,7 @@ PndHandInterface* getPndHandInterface(const std::vector<int>& values) {
   if (version1 == PndHandVersion::HandOld) {
     static PND_HandController instance(values);
     return &instance;
-  } else if (version1 == PndHandVersion::Hand_0_2_31) {
+  } else if (version1 == PndHandVersion::Hand_0_2_31 || version1 == PndHandVersion::Hand_0_2_32) {
     std::vector<int> lr_values;
     lr_values.insert(lr_values.end(), values.begin(), values.end());
     lr_values.insert(lr_values.end(), values.begin(), values.end());
