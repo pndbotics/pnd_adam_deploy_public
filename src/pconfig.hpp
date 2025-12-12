@@ -254,17 +254,17 @@ class PConfig {
   PConfig() {
     // clang-format off
     addCfg("10.10.10.70", "hipPitch_Left",       -1,  7,  0.42857, -0.41,  -0.586, 1.66, 110, 1, 0, 1);
-    addCfg("10.10.10.71", "hipRoll_Left",        -1, 51,  0.0745, -0.04,  -0.085, 20.0, 45,  1, 0, 1);
-    addCfg("10.10.10.72", "hipYaw_Left",          1, 31,  0.048387, -0.23,  -0.322, 30.1, 30,  1, 0, 1);
+    addCfg("10.10.10.71", "hipRoll_Left",        -1, 51,  0.0838, -0.04,  -0.085, 20.0, 45,  1, 0, 1);
+    addCfg("10.10.10.72", "hipYaw_Left",          1, 31,  0.0529, -0.23,  -0.322, 30.1, 30,  1, 0, 1);
     addCfg("10.10.10.73", "kneePitch_Left",       1,  7,  0.42857,  0.81,   1.288, 1.66, 110, 1, 0, 1);
-    addCfg("10.10.10.74", "anklePitch_Left",     -1, 30, 0.0592, -0.47,  -0.789, 16.5, 30,  1, 0, 1);
-    addCfg("10.10.10.75", "ankleRoll_Left",       1, 30, 0.0592,  0.0,    0.002, 16.5, 30,  1, 0, 1);
+    addCfg("10.10.10.74", "anklePitch_Left",     -1, 30, 0.0567, -0.47,  -0.789, 16.5, 30,  1, 0, 1);
+    addCfg("10.10.10.75", "ankleRoll_Left",       1, 30, 0.0567,  0.0,    0.002, 16.5, 30,  1, 0, 1);
     addCfg("10.10.10.50", "hipPitch_Right",       1,  7,  0.42857, -0.41,  -0.586, 1.66, 110, 1, 0, 1);
-    addCfg("10.10.10.51", "hipRoll_Right",       -1, 51,  0.0745,  0.04,   0.085, 20.0, 45,  1, 0, 1);
-    addCfg("10.10.10.52", "hipYaw_Right",         1, 31,  0.048387,  0.23,   0.322, 30.1, 30,  1, 0, 1);
+    addCfg("10.10.10.51", "hipRoll_Right",       -1, 51,  0.0838,  0.04,   0.085, 20.0, 45,  1, 0, 1);
+    addCfg("10.10.10.52", "hipYaw_Right",         1, 31,  0.0529,  0.23,   0.322, 30.1, 30,  1, 0, 1);
     addCfg("10.10.10.53", "kneePitch_Right",     -1,  7,  0.42857,  0.81,   1.288, 1.66, 110, 1, 0, 1);
-    addCfg("10.10.10.54", "anklePitch_Right",     1, 30, 0.0592, -0.47,  -0.789, 16.5, 30,  1, 0, 1);
-    addCfg("10.10.10.55", "ankleRoll_Right",     -1, 30, 0.0592,  0.0,   -0.002, 16.5, 30,  1, 0, 1);
+    addCfg("10.10.10.54", "anklePitch_Right",     1, 30, 0.0567, -0.47,  -0.789, 16.5, 30,  1, 0, 1);
+    addCfg("10.10.10.55", "ankleRoll_Right",     -1, 30, 0.0567,  0.0,   -0.002, 16.5, 30,  1, 0, 1);
     addCfg("10.10.10.90", "waistRoll",            1, 51,  0.074,  0.0,    0.0,   30.1, 30,  1, 0, 1);
     addCfg("10.10.10.91", "waistPitch",          -1, 51,  0.074,  0.0,    0.0,   30.1, 30,  1, 0, 1);
     addCfg("10.10.10.92", "waistYaw",            -1, 51,  0.074,  0.0,    0.0,   30.1, 30,  1, 0, 1);
@@ -310,12 +310,12 @@ class PConfig {
 
       zero_pos_[i] = pcfg_[i].zero_pos;
       default_dof_pos_[i] = pcfg_[i].default_dof_pos;
-      kd_scale_[i] = pcfg_[i].kd_scale;
+      // kd_scale_[i] = pcfg_[i].kd_scale;
       joint_dir_[i] = pcfg_[i].joint_dir;
       joint_gear_ratio_[i] = pcfg_[i].joint_gear_ratio;
       c_t_scale_[i] = pcfg_[i].c_t_scale;
 
-      // kd_scale_[i] = c_t_scale_[i] * joint_gear_ratio_[i] *joint_gear_ratio_[i] /(2 * M_PI);
+      kd_scale_[i] = c_t_scale_[i] * joint_gear_ratio_[i] *joint_gear_ratio_[i] /(2 * M_PI);
     }
 
     std::vector<std::string> ankle_names = {
